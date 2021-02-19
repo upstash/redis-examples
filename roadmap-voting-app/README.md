@@ -19,25 +19,25 @@ The application uses [Upstash](https://upstash.com) (Serverless Redis Database) 
 
 ### Deployment Steps
 After clicking the deploy button, enter a name for your project. Then you will be asked to install Upstash integration.
-<img src="./docs/s2.png" width="250" />
+<img src="./docs/s2.png" width="500" />
 
 You can sign up/sign in the following dialog:
-![signup](./docs/s3.png)
+<img src="./docs/s3.png" width="500" />
 
 Create a free database:
-![dbcreate](./docs/s4.png)
+<img src="./docs/s4.png" width="500" />
 
 Select your database and the Vercel project:
-![link](./docs/s5.png)
+<img src="./docs/s5.png" width="500" />
 
 Click `COMPLETE ON VERCEL` button:
-![link](./docs/s6.png)
+<img src="./docs/s6.png" width="500" />
 
 Finish you deployment by choosing a repository to host the project. In the next step, set the URL of your project's logo:
-![repo](./docs/s7.png | height = 100px)
+<img src="./docs/s7.png" width="500" />
 
 Your Roadmap Voting Page should be ready:
-![final](./docs/s8.png | height = 100px)
+<img src="./docs/s8.png" width="500" />
 
 
        
