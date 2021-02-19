@@ -19,7 +19,7 @@ The application uses [Upstash](https://upstash.com) (Serverless Redis Database) 
 
 ### Deployment Steps
 After clicking the deploy button, enter a name for your project. Then you will be asked to install Upstash integration.
-![install](./docs/s2.png)
+<img src="./docs/s2.png" />
 
 You can sign up/sign in the following dialog:
 ![signup](./docs/s3.png)
