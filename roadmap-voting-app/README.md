@@ -34,10 +34,10 @@ Click `COMPLETE ON VERCEL` button:
 ![link](./docs/s6.png)
 
 Finish you deployment by choosing a repository to host the project. In the next step, set the URL of your project's logo:
-![repo](./docs/s7.png =250x)
+![repo](./docs/s7.png | height = 100px)
 
 Your Roadmap Voting Page should be ready:
-![final](./docs/s8.png =250x)
+![final](./docs/s8.png | height = 100px)
 
 
        
