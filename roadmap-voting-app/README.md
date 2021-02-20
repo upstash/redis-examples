@@ -1,4 +1,6 @@
 # Roadmap Voting App 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fupstash%2Fserverless-tutorials%2Ftree%2Fmaster%2Froadmap-voting-demo&env=LOGO&envDescription=Enter%20URL%20for%20your%20project%2Fcompany%20logo&envLink=https%3A%2F%2Fdocs.upstash.com%2Fdocs%2Ftutorials%2Froadmap_voting_app&project-name=roadmap-voting&repo-name=roadmap-voting&demo-title=Roadmap%20Voting&demo-description=Roadmap%20Voting%20Page%20for%20Your%20Project&demo-url=https%3A%2F%2Froadmap.upstash.com&integration-ids=oac_V3R1GIpkoJorr6fqyiwdhl17)
+<br/>
 This example showcases how to use Redis as a data store in a Next.js project. Upstash is used as Serverless Redis database.
 
 The example is a roadmap voting application where users can enter and vote for feature requests. It features the following:
@@ -12,6 +14,7 @@ Upstash uses this  application to collect feedback about its roadmap. See
                                     
 ## Deploy Your Own
 You can deploy Roadmap Voting App for your project/company clicking the below button:
+<br/>
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Fupstash%2Fserverless-tutorials%2Ftree%2Fmaster%2Froadmap-voting-demo&env=LOGO&envDescription=Enter%20URL%20for%20your%20project%2Fcompany%20logo&envLink=https%3A%2F%2Fdocs.upstash.com%2Fdocs%2Ftutorials%2Froadmap_voting_app&project-name=roadmap-voting&repo-name=roadmap-voting&demo-title=Roadmap%20Voting&demo-description=Roadmap%20Voting%20Page%20for%20Your%20Project&demo-url=https%3A%2F%2Froadmap.upstash.com&integration-ids=oac_V3R1GIpkoJorr6fqyiwdhl17)
 
 ## Configuration
@@ -20,37 +23,37 @@ The application uses [Upstash](https://upstash.com) (Serverless Redis Database) 
 ### Deployment Steps
 After clicking the deploy button, enter a name for your project. Then you will be asked to install Upstash integration.
 <br/>
-<img src="./docs/s2.png" width="300" margin="10" />
+<img src="./docs/s2.png" width="300" />
 <br/>
 
 You can sign up/sign in the following dialog:
 <br/>
-<img src="./docs/s3.png" width="300" margin="10" />
+<img src="./docs/s3.png" width="300" />
 <br/>
 
 Create a free database:
 <br/>
-<img src="./docs/s4.png" width="300" margin="10" />
+<img src="./docs/s4.png" width="300" />
 <br/>
 
 Select your database and the Vercel project:
 <br/>
-<img src="./docs/s5.png" width="300" margin="10" />
+<img src="./docs/s5.png" width="300" />
 <br/>
 
 Click `COMPLETE ON VERCEL` button:
 <br/>
-<img src="./docs/s6.png" width="300" margin="10" />
+<img src="./docs/s6.png" width="300" />
 <br/>
 
 Finish you deployment by choosing a repository to host the project. In the next step, set the URL of your project's logo:
 <br/>
-<img src="./docs/s7.png" width="300" margin="10" />
+<img src="./docs/s7.png" width="300" />
 <br/>
 
 Your Roadmap Voting Page should be ready:
 <br/>
-<img src="./docs/s8.png" width="300" margin="10" />
+<img src="./docs/s8.png" width="300" />
 <br/>
 
 
