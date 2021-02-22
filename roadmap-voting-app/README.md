@@ -57,5 +57,9 @@ Your Roadmap Voting Page should be ready:
 <img src="./docs/s8.png" width="300" />
 <br/>
 
+### Maintenance
+The application uses a Redis database to store the feature requests and emails. The features requests are kept in a sorted set with name `roadmap`. You can connect to it via Redis-cli and manage the data using the command `zrange roadmap 0 1000 WITHSCORES`. The emails are stored in a set with name `emails`. So you can get the list by the command `smembers emails`.  
+
+
 
        
