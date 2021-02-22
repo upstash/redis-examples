@@ -1,7 +1,7 @@
 # Roadmap Voting App 
 
 <br/>
-This example showcases how to use Redis as a data store in a Next.js project. Upstash is used as Serverless Redis database.
+This example showcases how to use Redis as a data store in a Next.js project. Upstash&Vercel integration helps you to deploy the application with zero cost.
 
 The example is a roadmap voting application where users can enter and vote for feature requests. It features the following:
 
