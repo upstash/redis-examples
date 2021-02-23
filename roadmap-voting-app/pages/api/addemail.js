@@ -1,7 +1,6 @@
 import Redis from 'ioredis'
 import {fixUrl} from "./utils";
 
-
 module.exports = async(req, res) => {
     let redis = new Redis(fixUrl(process.env.REDIS_URL));
 

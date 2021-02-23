@@ -5,8 +5,6 @@ module.exports = async (req, res) => {
     let redis = new Redis(fixUrl(process.env.REDIS_URL));
     const body = req.body;
     const title = body["title"];
-
-
     if (!title) {
         redis.quit()
         res.json({
