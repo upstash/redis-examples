@@ -1,4 +1,4 @@
-import { getRedis } from './utils'
+import { getRedis } from './_utils/redis'
 
 module.exports = async (req, res) => {
   let redis = getRedis()
