@@ -1,5 +1,5 @@
 
-## This code is outdated. Please see [the newer version](https://github.com/vercel/next.js/tree/canary/examples/with-redis) 
+## This code is outdated. See the newer version [here](https://github.com/vercel/next.js/tree/canary/examples/with-redis) 
 
 
 
