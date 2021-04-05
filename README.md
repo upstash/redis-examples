@@ -7,3 +7,5 @@
 [Roadmap Voting App](./roadmap-voting-app/README.md): A single page application which showcases Upstash&Vercel integration.
 
 [Express Session with Serverless Redis](./express-session-with-redis/README.md): How to use Redis as the session storage of your Express application.
+
+[Using Serverless Framework](./using-serverless-framework/README.md): Deploy your serverless application using serverless framework.
