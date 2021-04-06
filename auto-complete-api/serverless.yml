@@ -11,7 +11,8 @@
 #
 # Happy Coding!
 
-service: using-serverless-framework
+service: auto-complete-api
+useDotenv: true
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
@@ -22,10 +23,8 @@ frameworkVersion: '2'
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   lambdaHashingVersion: 20201221
-  environment:
-    REDIS_URL: rediss://:ec0651dac90948de97cf09a57a74fd62@usw1-selected-termite-30690.upstash.io:30690
 
 # you can overwrite defaults here
 #  stage: dev
@@ -47,7 +46,6 @@ provider:
 #            - "Ref" : "ServerlessDeploymentBucket"
 #            - "/*"
 
-# you can define service wide environment variables here
 
 # you can add packaging information here
 #package:
@@ -59,21 +57,14 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
-  helloSync:
-    handler: handlerSync.hello
-  helloEphemeral:
-    handler: handlerEphemeral.hello
-  helloNodeRedis:
-    handler: handlerNodeRedis.hello
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
-#    events:
-#      - httpApi:
-#          path: /users/create
-#          method: get
+  query:
+    handler: handler.query
+    events:
+      - httpApi:
+          path: /query
+          method: get
+          cors: true
+
 #      - websocket: $connect
 #      - s3: ${env:BUCKET}
 #      - schedule: rate(10 minutes)
