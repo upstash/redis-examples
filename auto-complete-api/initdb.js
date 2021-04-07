@@ -253,7 +253,6 @@ var client = new Redis(process.env.REDIS_URL);
 
 for (const country of countries) {
     let term = country.name.toUpperCase();
-    console.log("adding:" + term);
     let terms = [];
 
     for (let i = 1; i < term.length; i++) {
@@ -261,7 +260,7 @@ for (const country of countries) {
         terms.push(term.substring(0, i));
     }
     terms.push(0);
-    terms.push(term + "*")
+    terms.push(term + "*");
     (async () => {
         await client.zadd("terms", ...terms)
     })();
