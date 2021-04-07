@@ -42,3 +42,10 @@ input {
     transform: rotate(360deg);
   }
 }
+
+.bloglink {
+  width: 100%;
+  position: fixed;
+  bottom: 40px;
+  color: white;
+}

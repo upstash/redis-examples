@@ -9,3 +9,5 @@
 [Express Session with Serverless Redis](./express-session-with-redis/): How to use Redis as the session storage of your Express application.
 
 [Using Serverless Framework](./using-serverless-framework/): Deploy your serverless application using serverless framework.
+
+[Auto Complete API](./auto-complete-api/): Auto complete (suggest) API using Serverless Redis.

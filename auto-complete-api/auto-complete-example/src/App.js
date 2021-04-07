@@ -9,7 +9,7 @@ const getSuggestionValue = suggestion => suggestion;
 
 // Use your imagination to render suggestions.
 const renderSuggestion = suggestion => (
-    <div style={{color : "white"}}>
+    <div style={{color: "white"}}>
         {suggestion}
     </div>
 );
@@ -29,7 +29,7 @@ class App extends React.Component {
         };
     }
 
-    onChange = (event, { newValue }) => {
+    onChange = (event, {newValue}) => {
         this.setState({
             value: newValue
         });
@@ -37,7 +37,7 @@ class App extends React.Component {
 
     // Autosuggest will call this function every time you need to update suggestions.
     // You already implemented this logic above, so just use it.
-    onSuggestionsFetchRequested = ({ value }) => {
+    onSuggestionsFetchRequested = ({value}) => {
         fetch("https://wfgz7cju24.execute-api.us-east-1.amazonaws.com/query?term=" + value)
             .then(res => res.json())
             .then(
@@ -61,7 +61,7 @@ class App extends React.Component {
     };
 
     render() {
-        const { value, suggestions } = this.state;
+        const {value, suggestions} = this.state;
 
         // Autosuggest will pass through all these props to the input.
         const inputProps = {
@@ -82,7 +82,15 @@ class App extends React.Component {
                         renderSuggestion={renderSuggestion}
                         inputProps={inputProps}
                     />
+
                 </header>
+                <div className="bloglink">
+                    This is a sample application of "Autocomplete API with Serverless Redis". <br/>
+                    See <a style={{color: "#ddd"}} href="http://docs.upstash.com/tutorials/auto_complete_with_serverless_redis">
+                    the blog post.
+                </a>
+                </div>
+
             </div>
 
         );
