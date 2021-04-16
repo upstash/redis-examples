@@ -18,7 +18,7 @@ node_modules
 /build
 
 *.iml
-/.idea
+*.idea
 
 # misc
 .DS_Store
