@@ -4,9 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "build": "nuxt generate",
+    "start": "nuxt start"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

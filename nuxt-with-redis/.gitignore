@@ -22,3 +22,5 @@ newrelic_agent.log
 sw.*
 
 .env
+
+.vercel
