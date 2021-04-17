@@ -46,15 +46,16 @@ export default {
       count: 0
     }
   },
+  async asyncData() {
+    const response = await fetch(process.env.baseUrl + "/api/count")
+    return await response.json() // { count: 123 }
+  },
   methods: {
     async getCount() {
       const response = await fetch(process.env.baseUrl + "/api/count")
       const data = await response.json()
       this.count = data.count
     }
-  },
-  async fetch() {
-    await this.getCount()
   }
 }
 </script>

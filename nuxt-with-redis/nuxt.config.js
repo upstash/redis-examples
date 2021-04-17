@@ -11,10 +11,8 @@ export default {
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
-  components: true,
   buildModules: ["@nuxtjs/tailwindcss"],
   env: {
     baseUrl: process.env.BASE_URL || "http://localhost:3000"
-  },
-  serverMiddleware: [{ path: "/api", handler: "~/api/count.js" }]
+  }
 }
