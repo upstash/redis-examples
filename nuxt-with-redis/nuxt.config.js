@@ -14,5 +14,6 @@ export default {
   buildModules: ["@nuxtjs/tailwindcss"],
   env: {
     baseUrl: process.env.BASE_URL || "http://localhost:3000"
-  }
+  },
+  serverMiddleware: [{ path: "/api/count", handler: "~/api/count.js" }]
 }
