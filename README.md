@@ -4,7 +4,7 @@
 
 [Next.js with Redis](./nextjs-with-redis/): A sample web application which uses Redis as state store in Next.js application.
 
-[Nuxt.js with Redis](./nuxtjs-with-redis/): A sample web application which uses Redis as state store in Nuxt.js application.
+[Nuxt.js with Redis](./nuxt-with-redis/): A sample web application which uses Redis as state store in Nuxt.js application.
 
 [Roadmap Voting App](./roadmap-voting-app/): (Next.js + Redis) A single page application which showcases Upstash&Vercel integration.
 
