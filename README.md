@@ -11,3 +11,5 @@
 [Using Serverless Framework](./using-serverless-framework/): Deploy your serverless application using serverless framework.
 
 [Auto Complete API](./auto-complete-api/): (CRA + Redis) Auto complete (suggest) API using Serverless Redis.
+
+[Coin Price List](./coin-price-list/): Backendless GraphQL use case with Next.js and Redis.
