@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "hdr-histogram-js": "^2.0.1",
+    "ioredis": "^4.27.1"
+  }
+}

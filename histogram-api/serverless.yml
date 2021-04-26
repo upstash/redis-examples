@@ -1,0 +1,25 @@
+service: histogram-api
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  environment:
+    REDIS_URL: REPLACE_HERE
+
+functions:
+  record:
+    handler: handler.record
+    events:
+      - httpApi:
+          path: /record
+          method: get
+          cors: true
+  get:
+    handler: handler.get
+    events:
+      - httpApi:
+          path: /get
+          method: get
+          cors: true
