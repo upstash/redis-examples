@@ -14,7 +14,7 @@ functions:
     events:
       - httpApi:
           path: /record
-          method: get
+          method: post
           cors: true
   get:
     handler: handler.get

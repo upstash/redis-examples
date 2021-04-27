@@ -7,6 +7,7 @@ const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': true,
 };
+const SIZE = 10000;
 
 module.exports.get = async (event) => {
     if (!event.queryStringParameters || !event.queryStringParameters.name) {
@@ -21,7 +22,7 @@ module.exports.get = async (event) => {
         };
     }
     const name = event.queryStringParameters.name;
-    const data = await client.lrange(name, 0, 10000);
+    const data = await client.lrange(name, 0, SIZE);
     const histogram = hdr.build();
     data.forEach(item => {
         histogram.recordValue(item);
@@ -38,25 +39,27 @@ module.exports.get = async (event) => {
 };
 
 module.exports.record = async (event) => {
-    if (!event.queryStringParameters || !event.queryStringParameters.name || !event.queryStringParameters.value) {
+    let body = JSON.parse(event.body)
+    if (!body || !body.name || !body.values) {
         return {
             statusCode: 400,
             headers: headers,
             body: JSON.stringify(
                 {
-                    message: 'Invalid parameters. Name and value is needed.',
+                    message: 'Invalid parameters. Name and values are needed.',
                 }
             ),
         };
     }
-    const name = event.queryStringParameters.name;
-    const value = parseInt(event.queryStringParameters.value, 10);
-    await client.lpush(name, value)
+    const name = body.name;
+    const values = body.values;
+    await client.lpush(name, values)
     return {
         statusCode: 200,
         body: JSON.stringify(
             {
-                message: 'Success'
+                message: 'Success',
+                name: name
             }
         ),
     };
