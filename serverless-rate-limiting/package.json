@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "async-ratelimiter": "^1.2.8",
+    "ioredis": "^4.27.1",
+    "request-ip": "^2.1.3"
+  }
+}

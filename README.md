@@ -16,3 +16,7 @@
 
 [Coin Price List](./coin-price-list/): Backendless GraphQL use case with Next.js and Redis.
 
+[Serverless Histogram API](./histogram-api/): Histogram API with AWS Lambda and Redis.
+
+[Redisson](./redisson/): Example code that uses Redisson as client.
+
