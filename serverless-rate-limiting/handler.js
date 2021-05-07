@@ -3,7 +3,7 @@ const Redis = require('ioredis')
 const { getClientIp } = require('request-ip')
 
 const rateLimiter = new RateLimiter({
-    db: new Redis("rediss://:ec0651dac90948de97cf09a57a74fd62@usw1-selected-termite-30690.upstash.io:30690"),
+    db: new Redis("REPLACE_HERE"),
     max: 1,
     duration: 5_000
 })
