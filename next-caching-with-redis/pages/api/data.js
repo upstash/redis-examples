@@ -28,7 +28,5 @@ export default async (req, res) => {
                 redis.set("cache", JSON.stringify(result.data), "EX", 60)
                 return res.status(200).json(result)
             })
-
     }
-
 }

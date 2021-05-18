@@ -2,7 +2,7 @@ let response;
 var Redis = require("ioredis");
 
 if (typeof client === 'undefined') {
-    var client = new Redis("rediss://:ec0651dac90948de97cf09a57a74fd62@usw1-selected-termite-30690.upstash.io:30690");
+    var client = new Redis("YOUR_REDIS_URL");
 }
 
 exports.lambdaHandler = async (event, _context) => {

@@ -10,13 +10,9 @@ export default function Home() {
         e.preventDefault();
         window.location.reload();
     }
-
     const {data, error} = useSWR("api/data", fetcher)
-
     if (error) return "An error has occurred.";
     if (!data) return "Loading...";
-
-
     return (
         <div className={styles.container}>
             <Head>
