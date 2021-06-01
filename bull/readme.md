@@ -1,5 +1,11 @@
-var Queue = require('bull');
+## Using Bull with Upstash 
+                                                                                      
+                          
+Configure `stalledInterval`, `guardInterval` and `drainDelay` for efficient use of bandwidth. 
 
+See [the Bull docs](https://github.com/OptimalBits/bull/blob/master/REFERENCE.md#queue) for details about the advanced configuration parameters.
+
+```javascript
 var settings = {
     // lockDuration: 30000, // Key expiration time for job locks.
     // lockRenewTime: 15000, // Interval on which to acquire the job lock
@@ -13,14 +19,4 @@ var settings = {
 var videoQueue = new Queue('video transcoding', 'YOUR_REDIS_URL', {settings: settings});
 
 
-videoQueue.process(function (job, done) {
-    console.log(job.data)
-    done();
-}).catch(err => {
-    console.log(err)
-});
-
-
-videoQueue.add({video: 'http://example.com/video111.mov'});
-videoQueue.add({video: 'http://example.com/video222.mov'});
-videoQueue.add({video: 'http://example.com/video333.mov'});
+```
