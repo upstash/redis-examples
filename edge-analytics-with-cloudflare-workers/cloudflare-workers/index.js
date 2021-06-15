@@ -6,8 +6,8 @@ addEventListener("fetch", (event) => {
     );
 });
 
-const endpoint = 'https://us1-clever-barnacle-33924.upstash.io'
-const token = 'AYSEACQgOTZkMmYwZjMtNzJhOS00ZjY1LThmNDctMTE0OWJhOTA5Y2ViMzBkYmJmZDMzYmQyNDUxYmFkNjk3MjJlYjQ1MWQ5ZDg='
+const endpoint = 'REPLACE_UPSTASH_REST_ENDPOINT'
+const token = 'REPLACE_UPSTASH_REST_TOKEN'
 
 async function recordRequest(request) {
     let d = new Date();
