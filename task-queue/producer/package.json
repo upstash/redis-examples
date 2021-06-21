@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "bull": "^3.22.8"
+  }
+}
