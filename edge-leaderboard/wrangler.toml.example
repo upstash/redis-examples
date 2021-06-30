@@ -1,0 +1,10 @@
+name = "edge-leaderboard"
+type = "javascript"
+
+account_id = "REPLACE_YOUR_ACCOUNT_ID"
+workers_dev = true
+route = ""
+zone_id = ""
+
+[vars]
+TOKEN = "REPLACE_YOUR_UPSTASH_REST_TOKEN"
