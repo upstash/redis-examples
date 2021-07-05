@@ -5,14 +5,14 @@ const redis = require('redis')
 
 var RedisStore = require('connect-redis')(session)
 var client = redis.createClient ({
-// REPLACE HERE
+  // REPLACE HERE
 });
 
 var app = express()
 
 app.use(session({
     store: new RedisStore({ client: client }),
-    secret: 'forest squirrel',
+    secret: 'forest cat',
     resave: false,
     saveUninitialized: true
 }))
@@ -44,5 +44,5 @@ app.get('/bar', function (req, res, next) {
 })
 
 app.listen(8080, function () {
-    console.log('Example app listening on port 8080!');
+    console.log('The app listening on port 8080!');
 });
