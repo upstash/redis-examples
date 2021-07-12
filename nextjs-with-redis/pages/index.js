@@ -3,6 +3,7 @@ import styles from '../styles/Home.module.css'
 import Redis from 'ioredis'
 import { useState } from 'react'
 
+let redis = new Redis(process.env.REDIS_URL)
 
 export default function Home({ data }) {
   const [count, setCount] = useState(data)
@@ -50,8 +51,6 @@ export default function Home({ data }) {
 }
 
 export async function getServerSideProps() {
-  let redis = new Redis(process.env.REDIS_URL)
   const data = await redis.incr('counter')
-  redis.quit()
   return { props: { data } }
 }

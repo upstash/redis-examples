@@ -1,9 +1,8 @@
 import Redis from 'ioredis'
 
-export default async (req, res) => {
-  let redis = new Redis(process.env.REDIS_URL)
-  const count = await redis.incr('counter')
-  redis.quit()
+let redis = new Redis(process.env.REDIS_URL)
 
+export default async (req, res) => {
+  const count = await redis.incr('counter')
   res.status(200).json({ count })
 }
