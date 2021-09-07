@@ -24,8 +24,6 @@ provider:
   lambdaHashingVersion: 20201221
   environment:
     DYNAMODB_TABLE: "news"
-    REDIS_URL: rediss://:7b9eaac006ff41ba9da6188a59121d45@usw1-valued-prawn-30576.upstash.io:30576
-    THUNDRA_KEY: 6f0c612a-08cc-4fed-8efd-5dba00c30c45
     SECTION: World
   iamRoleStatements:
     - Effect: Allow
