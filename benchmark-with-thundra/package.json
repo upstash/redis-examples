@@ -1,0 +1,15 @@
+{
+  "name": "newsapis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "redisHandler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@thundra/core": "^2.12.18",
+    "ioredis": "^4.24.2"
+  }
+}
