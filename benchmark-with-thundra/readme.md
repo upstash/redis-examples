@@ -9,4 +9,4 @@ select * from news where section = ‘World’ order by view_count desc;
 
 
 #### First Result
-[results](summary.png)
+![](summary.png)
