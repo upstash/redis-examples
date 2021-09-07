@@ -8,7 +8,9 @@ select * from news where section = ‘World’ order by view_count desc;
 ```
 
 
-#### First Results
+### Redis Results
 ![](redis.png)
+
+### DynamoDB Results
 
 ![](dynamo.png)
