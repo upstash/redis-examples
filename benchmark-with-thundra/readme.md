@@ -6,3 +6,7 @@ Both databases are loaded with 7001 sample articles and both functions fetch top
 ```shell
 select * from news where section = ‘World’ order by view_count desc;
 ```
+
+
+#### First Result
+[results](summary.png)
