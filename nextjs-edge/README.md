@@ -1,4 +1,4 @@
-#Getting started with Next.js Edge Functions
+# Getting started with Next.js Edge Functions
 
 This project is an example which uses Serverless Redis with Next.js Edge functions.
 
