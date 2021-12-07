@@ -1,0 +1,14 @@
+{
+  "name": "using-cloudflare-workers",
+  "version": "1.0.0",
+  "description": "See the [article](https://docs.upstash.com/tutorials/cloudflare_workers_with_redis).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@upstash/redis": "^0.2.1"
+  }
+}

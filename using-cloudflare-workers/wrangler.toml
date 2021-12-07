@@ -1,0 +1,12 @@
+name = "using-cloudflare-workers"
+type = 'webpack'
+account_id = 'PASTE_HERE'
+route = ''
+zone_id = ''
+usage_model = ''
+workers_dev = true
+target_type = "webpack"
+
+[vars]
+UPSTASH_REDIS_REST_TOKEN = "AXVBASQgMmJmNzhGUzNDdmMWI0MjAxOTBiNTExMzhiZDQ="
+UPSTASH_REDIS_REST_URL = "https://global-glorious-alpaca-30011.upstash.io"
