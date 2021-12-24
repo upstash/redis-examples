@@ -1,0 +1,22 @@
+org: omeraytac
+app: upstash-react-native-project
+service: upstash-react-native-project
+frameworkVersion: '2 || 3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: '20201221'
+
+functions:
+  addScore:
+    handler: handler.addScore
+    events:
+      - httpApi: 'POST /add'
+  getLeaderboard:
+    handler: handler.getLeaderboard
+    events:
+      - httpApi: 'GET /getLeaderboard'
+
+plugins:
+  - serverless-python-requirements

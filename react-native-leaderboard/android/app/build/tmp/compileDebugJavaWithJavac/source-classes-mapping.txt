@@ -1,0 +1,14 @@
+com/upstashapp_v2/BuildConfig.java
+ com.upstashapp_v2.BuildConfig
+com/upstashapp_v2/ReactNativeFlipper.java
+ com.upstashapp_v2.ReactNativeFlipper
+ com.upstashapp_v2.ReactNativeFlipper$1
+ com.upstashapp_v2.ReactNativeFlipper$2
+ com.upstashapp_v2.ReactNativeFlipper$2$1
+com/upstashapp_v2/MainApplication.java
+ com.upstashapp_v2.MainApplication
+ com.upstashapp_v2.MainApplication$1
+com/upstashapp_v2/MainActivity.java
+ com.upstashapp_v2.MainActivity
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
