@@ -1,0 +1,68 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.upstashapp_v2"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="30" />
+10
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\debug\AndroidManifest.xml:5:5-77
+11-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\debug\AndroidManifest.xml:5:22-75
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:4:5-67
+12-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:4:22-64
+13    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+13-->[com.facebook.flipper:flipper:0.99.0] C:\Users\omera\.gradle\caches\transforms-3\2f5725507f1929c6ddf8255f0bef77bd\transformed\jetified-flipper-0.99.0\AndroidManifest.xml:16:5-76
+13-->[com.facebook.flipper:flipper:0.99.0] C:\Users\omera\.gradle\caches\transforms-3\2f5725507f1929c6ddf8255f0bef77bd\transformed\jetified-flipper-0.99.0\AndroidManifest.xml:16:22-73
+14
+15    <application
+15-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:6:5-24:19
+16        android:name="com.upstashapp_v2.MainApplication"
+16-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:7:7-38
+17        android:allowBackup="false"
+17-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:11:7-34
+18        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+18-->[androidx.core:core:1.6.0] C:\Users\omera\.gradle\caches\transforms-3\5efa136d6b7a2c594211658eacead3c1\transformed\core-1.6.0\AndroidManifest.xml:24:18-86
+19        android:debuggable="true"
+20        android:icon="@mipmap/ic_launcher"
+20-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:9:7-41
+21        android:label="@string/app_name"
+21-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:8:7-39
+22        android:roundIcon="@mipmap/ic_launcher_round"
+22-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:10:7-52
+23        android:theme="@style/AppTheme"
+23-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:12:7-38
+24        android:usesCleartextTraffic="true" >
+24-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\debug\AndroidManifest.xml:8:9-44
+25        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+25-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\debug\AndroidManifest.xml:11:9-86
+25-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\debug\AndroidManifest.xml:11:19-83
+26        <activity
+26-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:13:7-23:18
+27            android:name="com.upstashapp_v2.MainActivity"
+27-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:14:9-37
+28            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+28-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:16:9-86
+29            android:label="@string/app_name"
+29-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:15:9-41
+30            android:launchMode="singleTask"
+30-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:17:9-40
+31            android:windowSoftInputMode="adjustResize" >
+31-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:18:9-51
+32            <intent-filter>
+32-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:19:9-22:25
+33                <action android:name="android.intent.action.MAIN" />
+33-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:20:13-65
+33-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:20:21-62
+34
+35                <category android:name="android.intent.category.LAUNCHER" />
+35-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:21:13-73
+35-->C:\Users\omera\Desktop\upstash\react-native-app\UpstashApp_v2\android\app\src\main\AndroidManifest.xml:21:23-70
+36            </intent-filter>
+37        </activity>
+38    </application>
+39
+40</manifest>
