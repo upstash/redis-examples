@@ -1,0 +1,10 @@
+query SpotifyFeatured @netlify(id: """4ec396b5-4fa4-4ce3-ab6e-9678170cfb32""", doc: """Spotify get featured playlist""") {
+  spotify {
+    featuredPlaylists {
+      name
+      images {
+        url
+      }
+    }
+  }
+}
