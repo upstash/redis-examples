@@ -47,17 +47,9 @@ export const post: RequestHandler = async ({ request }) => {
 export const patch: RequestHandler = async ({ request }) => {
 	const form = await request.formData();
 	const todo = form.get('todo');
-	const action = form.get('action');
-	const { id, text, status } = JSON.parse(todo as string);
-	let newTodo;
 
-	if (action === 'toggle') {
-		newTodo = { text, status: !status };
-	}
-	if (action === 'change') {
-		const text = form.get('text');
-		newTodo = { text, status };
-	}
+	const { id, text, status } = JSON.parse(todo as string);
+	let newTodo = { text, status: !status };
 
 	await redis.hset(DATABASE_NAME, id, JSON.stringify(newTodo));
 	return redirect;

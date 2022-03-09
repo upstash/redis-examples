@@ -1,26 +1,53 @@
 <script lang="ts">
+  import "../app.css";
   import type { Todo } from "$lib/types";
-  import TodoItem from "../components/TodoItem.svelte";
+  import TodoItem from "../components/Todo.svelte";
 
   export let todos: Todo[];
+  const uncheckedTodos = todos.filter(todo => !todo.status);
+  const checkedTodos = todos.filter((todo) => todo.status);
 </script>
 
 <svelte:head>
   <title>Todos</title>
 </svelte:head>
 
-<div class="todos">
-  <h1>Todos</h1>
-
+<main class="container">
   <form class="new" action="/" method="post">
-    <input name="text" aria-label="Add todo" placeholder="+ tap to add a todo" />
+    <input
+      type="text"
+      name="text"
+      autofocus
+      aria-label="Add todo"
+      class="input"
+      placeholder="What needs to be done?"/>
   </form>
 
-  {#each todos as todo (todo.id)}
-    <TodoItem todo={todo} />
-  {/each}
-</div>
+  <div class="todos">
+    {#each uncheckedTodos as todo (todo.id)}
+      <TodoItem {todo} />
+    {/each}
+  </div>
+
+
+  {#if (checkedTodos.length)}
+    <div class="todos todos-done">
+      {#each checkedTodos as todo (todo.id)}
+        <TodoItem {todo} />
+      {/each}
+    </div>
+  {/if}
+
+</main>
 
 <style>
+  .todos {
+    margin-top: 1.5rem;
+  }
 
+  .todos.todos-done {
+    background-color: var(--gray-100);
+    color: var(--gray-500);
+    border-radius: var(--rounded-md);
+  }
 </style>
