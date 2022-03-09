@@ -37,9 +37,24 @@
       {/each}
     </div>
   {/if}
+
+
+  <p class="repo-link">
+    <a
+      target="_blank"
+      href="https://github.com/upstash/redis-examples/tree/master/svelte-kit-todo-app-with-redis"
+    >
+      View source on GitHub
+    </a>
+  </p>
 </main>
 
 <style>
+  .repo-link {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
   .todos {
     margin-top: 1.5rem;
   }

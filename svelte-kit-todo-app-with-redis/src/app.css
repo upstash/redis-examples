@@ -32,6 +32,10 @@ html {
 	color: var(--gray-800);
 }
 
+a {
+	color: var(--gray-500);
+}
+
 button,
 input,
 optgroup,
