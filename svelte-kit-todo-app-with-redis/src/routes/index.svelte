@@ -4,6 +4,7 @@
   import TodoItem from "../components/Todo.svelte";
 
   export let todos: Todo[];
+
   const uncheckedTodos = todos.filter((todo) => !todo.status);
   const checkedTodos = todos.filter((todo) => todo.status);
 </script>

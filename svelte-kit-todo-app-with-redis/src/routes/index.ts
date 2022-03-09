@@ -41,7 +41,7 @@ export const post: RequestHandler = async ({ request }) => {
   const todo = JSON.stringify({ text, status: false });
 
   await redis.hset(DATABASE_NAME, id, todo);
-  return {};
+  return redirect;
 };
 
 export const patch: RequestHandler = async ({ request }) => {
