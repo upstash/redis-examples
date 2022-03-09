@@ -9,7 +9,8 @@
     <input type="hidden" name="todo" value={JSON.stringify(todo)} />
     <button
       class="checkbox"
-      aria-label="Mark todo as {todo.status ? 'not done' : 'done'}">
+      aria-label="Mark todo as {todo.status ? 'not done' : 'done'}"
+    >
       {todo.status ? "✓" : ""}
     </button>
   </form>

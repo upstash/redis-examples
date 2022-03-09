@@ -4,7 +4,7 @@
   import TodoItem from "../components/Todo.svelte";
 
   export let todos: Todo[];
-  const uncheckedTodos = todos.filter(todo => !todo.status);
+  const uncheckedTodos = todos.filter((todo) => !todo.status);
   const checkedTodos = todos.filter((todo) => todo.status);
 </script>
 
@@ -20,7 +20,8 @@
       autofocus
       aria-label="Add todo"
       class="input"
-      placeholder="What needs to be done?"/>
+      placeholder="What needs to be done?"
+    />
   </form>
 
   <div class="todos">
@@ -29,15 +30,13 @@
     {/each}
   </div>
 
-
-  {#if (checkedTodos.length)}
+  {#if checkedTodos.length}
     <div class="todos todos-done">
       {#each checkedTodos as todo (todo.id)}
         <TodoItem {todo} />
       {/each}
     </div>
   {/if}
-
 </main>
 
 <style>
