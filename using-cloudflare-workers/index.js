@@ -1,13 +1,13 @@
-import { auth,get } from '@upstash/redis'
+import { Redis } from '@upstash/redis/cloudflare'
 
-auth(UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN)
+const redis = Redis.fromEnv()
 
 addEventListener("fetch", event => {
     event.respondWith(handleRequest(event.request))
 })
 
 async function handleRequest(request) {
-    let country = new Map(request.headers).get("cf-ipcountry");
-    let greeting = await get(country);
-    return greeting.data ? new Response(greeting.data) : new Response("Hello!");
+    const country = new Map(request.headers).get("cf-ipcountry");
+    const greeting = await redis.get(country);
+    return greeting ? new Response(greeting) : new Response("Hello!");
 }

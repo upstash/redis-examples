@@ -1,4 +1,4 @@
-import { auth, hset, sadd } from "@upstash/redis";
+import { Redis } from "@upstash/redis";
 
 const submitHandler = async (req, res) => {
   const body = req.body;
@@ -19,27 +19,15 @@ const submitHandler = async (req, res) => {
 
   // Insert data into Upstash redis
 
-  auth({
+  const redis = new Redis({
     token: "INSERT_YOUR_TOKEN",
     url: "INSERT_YOUR_URL",
   });
 
   try {
     //Store the survey data
-    await hset(
-      `entries:${id}`,
-
-      //RATING
-      "rating",
-      data.rating,
-
-      //RECOMMENDATION
-      "recommendation",
-      data.recommendation,
-
-      //COMMENT
-      "comment",
-      data.comment
+    await redis.hset(
+      `entries:${id}`, data
     );
 
     //Store the id of the survey to retrieve it later
