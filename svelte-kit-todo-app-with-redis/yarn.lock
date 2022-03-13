@@ -110,9 +110,9 @@
   dependencies:
     "@types/node" "*"
 
-"@upstash/redis@^1.0.0-alpha.7":
-  version "1.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@upstash/redis/-/redis-1.0.0-alpha.7.tgz#311dd529796dd5493ce47c38b98002b2e00083db"
+"@upstash/redis@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@upstash/redis/-/redis-1.0.0.tgz#311dd529796dd5493ce47c38b98002b2e00083db"
   integrity sha512-N0QsdXzVpU8EWI10O20+hMbBFA7Oi951vnkhMzyAZTcnxnMXk92JcjwYY+1G0aJccktEB5nzGZ9cmNeGQ9tmzg==
   dependencies:
     isomorphic-fetch "^3.0.0"

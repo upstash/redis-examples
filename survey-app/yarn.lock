@@ -384,10 +384,10 @@
     "@typescript-eslint/types" "5.9.1"
     "eslint-visitor-keys" "^3.0.0"
 
-"@upstash/redis@^1.0.0-alpha.7":
+"@upstash/redis@^1.0.0":
   "integrity" "sha512-N0QsdXzVpU8EWI10O20+hMbBFA7Oi951vnkhMzyAZTcnxnMXk92JcjwYY+1G0aJccktEB5nzGZ9cmNeGQ9tmzg=="
-  "resolved" "https://registry.npmjs.org/@upstash/redis/-/redis-1.0.0-alpha.7.tgz"
-  "version" "1.0.0-alpha.7"
+  "resolved" "https://registry.npmjs.org/@upstash/redis/-/redis-1.0.0.tgz"
+  "version" "1.0.0"
   dependencies:
     "isomorphic-fetch" "^3.0.0"
 
