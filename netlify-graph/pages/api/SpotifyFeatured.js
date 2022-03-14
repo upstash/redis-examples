@@ -1,4 +1,4 @@
-const redisClient = require('@upstash/redis');
+const { Redis } = require('@upstash/redis');
 const NetlifyGraph = require("../../lib/netlifyGraph");
 
 
@@ -14,15 +14,17 @@ exports.handler = async (req, res) => {
 
     const eventBodyJson = req.body || {};
 
-
-    redisClient.auth('UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_PASSWORD');
-    spotifyData = await redisClient.get('spotify-cache');
-    if (spotifyData.data == null) {
-        spotifyData = await NetlifyGraph.fetchSpotifyFeatured({}, {accessToken: accessToken});
+    const redis = new Redis({
+        url: "UPSTASH_REDIS_REST_URL",
+        token: "UPSTASH_REDIS_REST_TOKEN",
+    })
+    spotifyData = await redis.get('spotify-cache');
+    if (spotifyData == null) {
+        spotifyData = await NetlifyGraph.fetchSpotifyFeatured({}, { accessToken: accessToken });
         if (spotifyData.errors) {
             console.error(JSON.stringify(spotifyData.errors, null, 2));
         } else {
-            await redisClient.setex('spotify-cache', 300, JSON.stringify(spotifyData));
+            await redis.setex('spotify-cache', 300, spotifyData);
         }
     } else {
         spotifyData = JSON.parse(spotifyData.data)

@@ -8,7 +8,7 @@
     "export": "next export"
   },
   "dependencies": {
-    "@upstash/redis": "^0.2.1",
+    "@upstash/redis": "^1.0.0",
     "netlify-graph-auth": "^0.0.3",
     "next": "^12.0.7",
     "react": "^17.0.2",
