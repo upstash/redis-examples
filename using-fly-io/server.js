@@ -1,14 +1,12 @@
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 3000;
 const {Redis} = require('@upstash/redis');
 
 const redis = new Redis({
     url: 'REPLACE_HERE',
     token: 'REPLACE_HERE',
 })
-
-
-const express = require("express");
-const app = express();
-const port = process.env.PORT || 3000;
 
 app.get(["/", "/:name"], async (req, res) => {
     let greeting = "<h1>Hello From Node on Fly!</h1>";
