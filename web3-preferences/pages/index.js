@@ -24,34 +24,36 @@ export default function Home() {
 
 
   async function checkConnection() {
-    ethereum
-      .request({ method: 'eth_accounts' })
-      .then(accounts => {
-        setAccountAddress(accounts[0])
-      })
-      .catch(console.error)
+    const provider = await detectEthereumProvider()
+    if (provider) {
+      provider
+        .request({ method: 'eth_accounts' })
+        .then(accounts => {
+          setAccountAddress(accounts[0])
+        })
+        .catch(console.log)
+    } else {
+      console.log("Not connected, window.ethereum not found")
+    }
   }
 
   async function connect() {
-    window.ethereum ?
-      ethereum.request({ method: "eth_requestAccounts" }).then((accounts) => {
-        if (!accountAddress) {
-          setAccountAddress(accounts[0])
-        }
-      }).catch((err) => console.log(err))
-      : console.log("Please install MetaMask")
-
-
-    console.log("window.ethereum:", window.ethereum)
-
     const provider = await detectEthereumProvider()
     console.log("provider:", provider)
 
     if (provider) {
       console.log('Ethereum successfully detected!')
+      provider.request({ method: "eth_requestAccounts" }).then((accounts) => {
+        if (!accountAddress) {
+          setAccountAddress(accounts[0])
+        }
+      }).catch((err) => console.log(err))
+      // : alert("Please install MetaMask")
+
+      console.log("window.ethereum:", window.ethereum)
       getPreferences()
     } else {
-      console.error('Please install MetaMask!', error)
+      alert('Please install MetaMask!')
     }
   }
 
@@ -68,14 +70,14 @@ export default function Home() {
       const data = await res.json()
     }
     else {
-      console.log("No account accountAddress is given", accountAddress)
+      alert("No account address detected")
     }
   }
 
   async function getPreferences(e) {
     if (accountAddress) {
       console.log("Fetching user preferences...")
-      const res = await fetch(`/api/fetch/${accountAddress}`, { method: "GET" })
+      const res = await fetch(`/api/${accountAddress}`, { method: "GET" })
       const data = await res.json()
 
       setUserSettings(data.result)
@@ -116,7 +118,7 @@ export default function Home() {
       <p>
         Lets you keep user preferences on cross-websites
       </p>
-      <br/>
+      <br />
       <p>For example, take a greeter message from user.</p>
       <TextField label="Call me..." variant="outlined" size="small" onKeyDown={takeGreetingMessage} />
       <br />
