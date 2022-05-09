@@ -20,3 +20,6 @@
 
 [Redisson](./redisson/): Example code that uses Redisson as client.
 
+[Web3-Preferences](./web3-preferences/): Web app connecting via Metamask, using public adresses to store cross/in-platform preferences.
+
+
