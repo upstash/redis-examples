@@ -12,7 +12,7 @@ export default function StarButton({ url }: StarButtonProps) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex cursor-pointer items-center gap-1.5 rounded-full bg-primary-50 px-4 py-1.5 text-primary-600 hover:bg-primary-100"
+      className="flex cursor-pointer items-center gap-1.5 rounded-full bg-white px-4 py-1.5 text-primary-600 hover:bg-primary-50"
     >
       <svg width="18" height="18" viewBox="0 0 16 16" version="1.1">
         <path
