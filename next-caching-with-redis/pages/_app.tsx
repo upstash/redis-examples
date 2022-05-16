@@ -33,10 +33,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ReadBlogPost>
         This is a sample project for the blogpost{" "}
         <a
-          href="https://blog.upstash.com/nextjs-caching-with-redis"
+          className="text-primary-600"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary-600"
+          href="https://blog.upstash.com/nextjs-caching-with-redis"
         >
           Speed up your Next.js application using Serverless Redis for caching.
         </a>
