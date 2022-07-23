@@ -6,7 +6,6 @@ const redis = new Redis({
   token: 'REPLACE_HERE',
 })
 
-
 export default async function handler(req, res) {
   const data = await redis.get('users');
   res.status(200).json({ users: data });

@@ -1,12 +1,24 @@
-name = "using-cloudflare-workers"
-type = 'webpack'
-account_id = 'PASTE_HERE'
-route = ''
-zone_id = ''
-usage_model = ''
+name = "upstash-modules-worker"
+type = "javascript"
+
 workers_dev = true
-target_type = "webpack"
+# route = ""
+# zone_id = ""
+account_id = 'd7a1e259a76604ae354d6ed96722937c'
+
+compatibility_date = "2022-03-22"
+compatibility_flags = []
+
+
+[build]
+command = "pnpm build"
+
+[build.upload]
+format = "modules"
+dir = "dist"
+main = "./index.mjs"
+
 
 [vars]
-UPSTASH_REDIS_REST_TOKEN = "AXVBASQgMmJmNzhGUzNDdmMWI0MjAxOTBiNTExMzhiZDQ="
-UPSTASH_REDIS_REST_URL = "https://global-glorious-alpaca-30011.upstash.io"
+UPSTASH_REDIS_REST_TOKEN = "AXkIASQgNDY5OWQ3ZWItYWIyMC00MTFiLWFiYmItNjkzYTU1ZTIzNjBhMmJhZTljZGJlZGQ3NGFlNjhmYzNhNWY4YjhkYTk2ODk="
+UPSTASH_REDIS_REST_URL = "https://global-concise-scorpion-30984.upstash.io"
