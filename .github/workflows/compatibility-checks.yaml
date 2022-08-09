@@ -1,0 +1,38 @@
+name: Compatibility Tests
+on:
+  push:
+    branches:
+      - 'compatible-libraries'
+
+  schedule:
+    - cron: "0 12 * * *"
+    # run everyday at 12.00
+
+# Maybe just limit to [production, dev, cypress_tests]
+jobs:
+  apscheduler:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python and dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+        run: pip install -r requirements.txt -U
+      - name: Run compatibility test
+        id: "testing"
+        run: |
+          python3 example.py
+        env:
+          UPSTASH_REDIS_HOST: ${{UPSTASH_REDIS_HOST}}
+          UPSTASH_REDIS_PASSWORD: ${{UPSTASH_REDIS_PASSWORD}}
+          UPSTASH_REDIS_PORT: ${{UPSTASH_REDIS_PORT}}
+      - name: Run script
+        env:
+          SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
+        # if: always() && steps.testing.outcome != 'success'
+        if: always()
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
