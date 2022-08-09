@@ -29,12 +29,12 @@ jobs:
         run: |
           python3 example.py
         env:
-          UPSTASH_REDIS_HOST: ${{UPSTASH_REDIS_HOST}}
-          UPSTASH_REDIS_PASSWORD: ${{UPSTASH_REDIS_PASSWORD}}
-          UPSTASH_REDIS_PORT: ${{UPSTASH_REDIS_PORT}}
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
       - name: Run script
         env:
-          SLACK_WEBHOOK: ${{secrets.SLACK_WEBHOOK}}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         # if: always() && steps.testing.outcome != 'success'
         if: always()
         run: |
