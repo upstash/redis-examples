@@ -8,8 +8,40 @@ on:
     - cron: "0 12 * * *"
     # run everyday at 12.00
 
-# Maybe just limit to [production, dev, cypress_tests]
 jobs:
+  sidekiq:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./using-sidekiq
+     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python and dependencies
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle init
+          bundle add sidekiq
+          echo "OurWorker.perform_async('easy')" | bundle exec irb -r ./worker.rb
+          bundle exec sidekiq -r ./worker.rb
+        shell: bash
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Run script for Sidekiq
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        # if: always() && steps.testing.outcome != 'success'
+        if: always()
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"SIDEKIQ-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
+
   apscheduler:
     runs-on: ubuntu-latest
     defaults:
@@ -38,5 +70,6 @@ jobs:
         # if: always() && steps.testing.outcome != 'success'
         if: always()
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"APSCHEDULER-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash
+  
