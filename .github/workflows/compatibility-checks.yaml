@@ -27,7 +27,9 @@ jobs:
           bundle init
           bundle add sidekiq
           echo "OurWorker.perform_async('easy')" | bundle exec irb -r ./worker.rb
-          bundle exec sidekiq -r ./worker.rb
+          echo "OurWorker.perform_async('hard')" | bundle exec irb -r ./worker.rb
+          echo "OurWorker.perform_async('super_hard')" | bundle exec irb -r ./worker.rb
+          timeout 10s bundle exec sidekiq -r ./worker.rb
         shell: bash
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
