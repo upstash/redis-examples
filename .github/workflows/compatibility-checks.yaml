@@ -17,8 +17,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set up Python and dependencies
-        uses: actions/setup-ruby@v1
+      - name: Set up Ruby and dependencies
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
       - name: Install dependencies
