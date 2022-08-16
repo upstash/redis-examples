@@ -37,6 +37,7 @@ jobs:
       #     UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
       - name: Install dependencies
         id: "run"
+        continue-on-error: true
         run: |
           gem install bundler
           bundle init
