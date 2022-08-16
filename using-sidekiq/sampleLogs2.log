@@ -1,0 +1,11 @@
+EmailService
+name1
+free
+Job found. Deleting from the scheduled set.
+EmailService
+name2
+paid
+Job found. Creating a new Email
+Emailed to: name3: 'Congrats on enterprise plan.'
+Emailed to: name1: 'Congrats on starting using our service and upgrading it to paid plan.'
+Emailed to: name2: 'Congrats on paid plan.'

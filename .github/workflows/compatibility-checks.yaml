@@ -21,25 +21,42 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
+      # - name: Install dependencies
+      #   run: |
+      #     gem install bundler
+      #     bundle init
+      #     bundle add sidekiq
+      #     echo "OurWorker.perform_async('easy')" | bundle exec irb -r ./worker.rb
+      #     echo "OurWorker.perform_async('hard')" | bundle exec irb -r ./worker.rb
+      #     echo "OurWorker.perform_async('super_hard')" | bundle exec irb -r ./worker.rb
+      #     timeout 10s bundle exec sidekiq -r ./worker.rb
+      #   shell: bash
+      #   env:
+      #     UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+      #     UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+      #     UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
       - name: Install dependencies
+        id: "run"
         run: |
           gem install bundler
           bundle init
           bundle add sidekiq
-          echo "OurWorker.perform_async('easy')" | bundle exec irb -r ./worker.rb
-          echo "OurWorker.perform_async('hard')" | bundle exec irb -r ./worker.rb
-          echo "OurWorker.perform_async('super_hard')" | bundle exec irb -r ./worker.rb
-          timeout 10s bundle exec sidekiq -r ./worker.rb
+          timeout 20s bundle exec sidekiq -r ./sendEmail.rb 2>&1 | tee sampleLogs2.log
         shell: bash
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
           UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
           UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Compare outputs
+        if: always()
+        id: 'compare'
+        run: |
+          diff <(sort sampleLogs.log) <(sort sampleLogs2.log)
       - name: Run script for Sidekiq
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        # if: always() && steps.testing.outcome != 'success'
-        if: always()
+        if: always() && steps.compare.outcome != 'success'
+        # if: always()
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text":"SIDEKIQ-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash
