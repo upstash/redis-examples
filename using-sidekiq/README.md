@@ -11,9 +11,9 @@ But whenever a user starts as an enterprise, you want to send notifications imme
 Or when they upgrade their plan, you want to immediately congratulate them.
 
 ### Configure Package
-`gem init` 
+`bundle init` 
 
-`gem add sidekiq`
+`bundle add sidekiq`
 ### Run Server
 `bundle exec sidekiq -r ./sendEmail.rb`
 
