@@ -17,61 +17,80 @@ Sidekiq.configure_server do |config|
 end
 
 
-# Let's flush defualt ScheduledSet and Queue
-Sidekiq::ScheduledSet.new.each do |job|
-    job.delete
-end
-Sidekiq::Queue.new.each do |job|
-    job.delete
-end
+# # Flush defualt ScheduledSet and Queue
+# Sidekiq::ScheduledSet.new.each do |job|
+#     job.delete
+# end
+# Sidekiq::Queue.new.each do |job|
+#     job.delete
+# end
 
 
 class EmailService
     include Sidekiq::Worker
-    def perform(name, action)
-        # Logic goes here. Let's assume sending email.
-
-        puts "Emailed to: " +  name + ": " + "'Congrats on " + action + " plan.'"
+    def perform(id, type)
+        # Logic goes here. Let's assume sending email by printing to console.
+        puts "Emailed to: " +  id + ": " + "'Congrats on " + type + " plan.'"
     end
 end
 
-def updateEmail(name, newAction)
+
+
+def updateEmail(id, newType)
     include Sidekiq::Job
     jobFound = false
     
     a = Sidekiq::ScheduledSet.new
     a.each do |job|
-        puts job.klass
-        puts job.args
-        if job.args[0] == name
+        if job.args[0] == id
             job.delete
-            puts "Job found. Deleting from the scheduled set."
             jobFound = true
         end
     end
 
     if jobFound
-        puts "Job found. Creating a new Email"
-        EmailService.perform_async(name, ("starting using our service and upgrading it to " + newAction))
+        EmailService.perform_async(id, ("starting using our service and upgrading it to " + newType))
     else
-        EmailService.perform_async(name, ("upgrading to " + newAction))
+        EmailService.perform_async(id, ("upgrading to " + newType))
     end
 end
 
-# EmailService.perform_async("veli", "enterprise")| bundle exec irb -r ./worker.rb
+def sendEmail(id, type)
+    case type
+    when "free"
+        EmailService.perform_in("5", id, "free")
+    when "paid"
+        EmailService.perform_in("3", id, "paid")
+    when "enterprise"
+        EmailService.perform_async(id, "enterprise")
+    when "enterprise10k"
+        EmailService.perform_async(id, "enterprise10k")
+    else
+        puts "Only plans are: `free`, `paid` and `enterprise`"
+    end
+end
 
 
-EmailService.perform_in("5", "name1", "free")
-EmailService.perform_in("3", "name2", "paid")
-EmailService.perform_async("name3", "enterprise")
+# EmailService.perform_async('id', 'en')
 
-# Sleep, so that some perform_in works, other one doesnt...
-# sleep(3)
+# # This one sends 4 messages, since enterprise immediately adds job to queue.
+# sendEmail("id1", "free")
+# sendEmail("id2", "paid")
+# sendEmail("id3", "enterprise")
+# updateEmail("id3", "enterprise10k")
 
-updateEmail("name1", "paid")
-# updateEmail("name2", "enterprise")
-# updateEmail("name3", "enterprise10k")
+# # This one sends 3 messages, since paid type job is scheduled, but type is upgraded immediately after.
+# sendEmail("id4", "free")
+# sendEmail("id5", "paid")
+# sendEmail("id6", "enterprise")
+# updateEmail("id5", "enterprise10k")
 
 
-# Sidekiq::Shutdown
+# # This one sends 4 messages, since all the messages are already sent.
+# sendEmail("id7", "free")
+# sendEmail("id8", "paid")
+# sendEmail("id9", "enterprise")
+
+# updateEmail("id7", "enterprise10k") 
+
 
