@@ -41,3 +41,7 @@ yarn-error.log*
 
 # cdk
 cdk.out
+
+# python
+*/venv
+__pycache__
