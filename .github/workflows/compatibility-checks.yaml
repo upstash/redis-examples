@@ -79,7 +79,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         if: always() && steps.testing.outcome != 'success'
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"APSCHEDULER-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"CELERY-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash
 
 
