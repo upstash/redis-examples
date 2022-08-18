@@ -30,7 +30,7 @@ jobs:
       - name: run
         continue-on-error: true
         run: |
-          timeout 20s bundle exec sidekiq -r ./sendEmail.rb 2>&1 | tee sampleLogs2.log | bash client.sh
+          timeout 30s bundle exec sidekiq -r ./sendEmail.rb 2>&1 | tee sampleLogs2.log | bash client.sh
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
           UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
