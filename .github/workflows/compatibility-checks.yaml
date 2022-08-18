@@ -69,6 +69,12 @@ jobs:
           celery -A tasks worker --loglevel=INFO > /dev/null 2>&1 &
           python3 test.py
         shell: bash
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+
+
       # # - name: Start flask server
       # #   run: |
       # #     timeout 10s flask --app server run
