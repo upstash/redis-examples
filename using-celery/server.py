@@ -1,14 +1,14 @@
 from concurrent.futures import process
 from celery.exceptions import TimeoutError
 from flask import Flask, request
-from tasks import add, process_task
+from tasks import process_task
 import time
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "Hello World!"
+    return "Celery With Upstash Redis!"
 
 
 @app.route('/run', methods = ['POST'])
@@ -26,8 +26,6 @@ def run():
 @app.route('/result', methods = ['POST'])
 def result():
     # Here, take the results of the process from celery and do necessary logic with it.
-    # If sending email, another celery process can be created.
-
     body = request.get_json()
     id = body['id']
     
@@ -35,7 +33,7 @@ def result():
         result = process_task.AsyncResult(id).get(timeout=1)
         return result
     except TimeoutError:
-        return "Process with id {id} does not exist.\n"
+        return f"Process with id {id} does not exist.\n"
     
 @app.route('/notify', methods = ['POST'])
 def notify():
