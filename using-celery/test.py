@@ -15,6 +15,12 @@ res3 = req3.wait()
 res4 = req4.wait()
 res5 = req5.wait()
 
+print('res1:', res1)
+print('res2:', res2)
+print('res3:', res3)
+print('res4:', res4)
+print('res5:', res5) 
+
 print('total time passed:', time.time() - start)
 if res1['result'] != "Successfull" or res2['result'] != "Successfull" or res3['result'] != "Successfull" or res4['result'] != "Successfull" or res5['result'] != "Failure":
     raise Exception('execution result is wrong')
@@ -23,8 +29,3 @@ if res1['billable_time'] < 1 or res2['billable_time'] < 3 or res3['billable_time
     print(res1['billable_time'], res2['billable_time'], res3['billable_time'], res4['billable_time'], res5['billable_time'])
     raise Exception("Didn't sleep properly.")
 
-print('res1:', res1)
-print('res2:', res2)
-print('res3:', res3)
-print('res4:', res4)
-print('res5:', res5) 
