@@ -64,6 +64,7 @@ jobs:
       - name: Install dependencies with latest versions
         run: pip install -r requirements.txt -U
       - name: Run servers and test
+        id: 'testing'
         run: |
           flask --app server run > /dev/null 2>&1 &
           celery -A tasks worker --loglevel=INFO > /dev/null 2>&1 &
@@ -73,6 +74,13 @@ jobs:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
           UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
           UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Run script
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() && steps.testing.outcome != 'success'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"APSCHEDULER-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
 
 
       # # - name: Start flask server
