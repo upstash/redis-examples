@@ -63,24 +63,30 @@ jobs:
           python-version: '3.8'
       - name: Install dependencies with latest versions
         run: pip install -r requirements.txt -U
-      - name: Start flask server
+      - name: Run servers and test
         run: |
-          flask --app server run
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-      - name: Start Celery worker
-        run: |
-          celery -A tasks worker --loglevel=INFO
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+          flask --app server run > /dev/null 2>&1 &
+          celery -A tasks worker --loglevel=INFO > /dev/null 2>&1 &
+          python3 test.py
+        shell: bash
+      # # - name: Start flask server
+      # #   run: |
+      # #     timeout 10s flask --app server run
+      # #   env:
+      # #     UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+      # #     UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+      # #     UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      # - name: Start Celery worker
+      #   run: |
+      #     celery -A tasks worker --loglevel=INFO
+      #   env:
+      #     UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+      #     UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+      #     UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
 
-      - name: Throw some requests
-        run: |
-          curl -X POST http://localhost:5000/run -H 'Content-Type: application/json' -d '{"id":"id1", "email":"a@b.com", "difficulty":"medium"}'
+      # - name: Throw some requests
+      #   run: |
+      #     curl -X POST http://localhost:5000/run -H 'Content-Type: application/json' -d '{"id":"id1", "email":"a@b.com", "difficulty":"medium"}'
 
       # - name: Run script
       #   env:

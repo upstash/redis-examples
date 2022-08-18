@@ -3,27 +3,29 @@ from concurrent.futures import process
 import os
 import time
 from celery import Celery
+import requests
 
 host = os.environ['UPSTASH_REDIS_HOST']
 password = os.environ['UPSTASH_REDIS_PASSWORD']
 port = os.environ['UPSTASH_REDIS_PORT']
 connection_link = "redis://:{}@{}:{}".format(password, host, port)
-# connection_link = "redis://:{}@{}:1234".format(password, host)
 
 
-print(connection_link)
-celery_app = Celery('tasks', broker=connection_link)
-# celery_app = Celery('tasks', backend=connection_link, broker=connection_link)
+# Results will expire from database after 30 seconds. 
+# You can remove `result_expires` option so that your results will be persisted and can be fetched whenever.
+celery_app = Celery('tasks', backend=connection_link, broker=connection_link, result_expires=10)
 
 
 @celery_app.task
 def add(x, y):
     time.sleep(5)
+    print(x + y)
     return x + y
 
 @celery_app.task
 def process_task(process_string, id, email):
 
+    start = time.time()
     print(f'Started on process {process_string} of user with id: {id}.')
 
     # maybe add ratelimiting... use 
@@ -35,18 +37,19 @@ def process_task(process_string, id, email):
     }
 
     time_for_process = job_difficulty_matrix.get(process_string, -1)
+    resultDict = {}
+
     if time_for_process != -1:
         time.sleep(time_for_process)
-        print(f"Process is finished after {time_for_process} seconds")
-        return f"Sending reports to {email} for user:{id}."
-        # Maybe generate some report here...
+        resultDict = {'process_string': process_string, 'id': id ,'email':email, 'result': 'Successfull', 'billable_time': time.time() - start}
     else:
-        print('Operation parameters are not valid.')
-        return f"Sending the failing notification to {email} for user:{id}."
+        resultDict = {'process_string': process_string, 'id': id ,'email':email, 'result': 'Failure', 'billable_time': time.time() - start}
 
-        # Give some notification error... Generate exception maybe, idk...
+    requests.post('http://localhost:5000/notify', json=resultDict)
+    return resultDict
+
     
-
+#  &>/dev/null flask --app server run & &>/dev/null celery -A tasks worker --loglevel=FATAL & python3 test.py
 
 # To start this session:
 # celery -A <filename> worker --loglevel=INFO
