@@ -34,6 +34,6 @@ if __name__ == '__main__':
     while counter < 5:
         pass
 
-    if steps < 70:
+    if steps < 7:
         print(steps)
         raise Exception("Decrement function didn't work.")
