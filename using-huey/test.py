@@ -1,0 +1,31 @@
+from coin import check_and_notify, check_price, notify
+
+webhook1 = 'webhook1'
+webhook2 = 'webhook2'
+
+threshold_eth = 3.5
+threshold_btc = 40
+
+threshold_min = 0
+
+# Runs every minute and sends notification:
+check_and_notify('eth', threshold_eth)
+# check_and_notify('btc', threshold_btc)
+
+# Can manually run whenever you want:
+eth_now = check_price('eth')
+print('eth now', eth_now)
+
+btc_now = check_price('btc')
+print('btc now', btc_now)
+
+if eth_now > threshold_min:
+    notif_1 = notify(webhook1, f'eth above threshold: {threshold_min} with value: {eth_now}')
+    notif_2 = notify(webhook2, f'eth above threshold: {threshold_min} with value: {eth_now}')
+
+    if notif_1(blocking=True, timeout=3) != f'awebhook1: eth above threshold: {threshold_min} with value: {eth_now}':
+        raise Exception('Result timed out or notification message is wrong.')
+    if notif_2(blocking=True, timeout=3) != f'webhook2: eth above threshold: {threshold_min} with value: {eth_now}':
+        raise Exception('Result timed out or notification message is wrong.')
+
+
