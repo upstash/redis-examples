@@ -1,39 +1,21 @@
-from coin import check_and_notify, check_price, notify
+import time
+from tasks import reverse, duplicate
+from app import huey
 
-webhook1 = 'webhook1'
-webhook2 = 'webhook2'
+rev_str = 'str_to_reverse'
+dup_str = 'str_to_duplicate'
+email = 'test@email.com'
 
-threshold_eth = 3.5
-threshold_btc = 40
+start = time.time()
 
-threshold_min = 0
+rev_res = reverse(email=email, string_to_process=rev_str)(blocking=True)
+rev_time = time.time()
 
-# Runs every minute and sends notification:
-scheduled = check_and_notify('eth', threshold_eth)
-scheduled.revoke()
-if not scheduled.is_revoked():
-    raise Exception('Schedule should be revoked')
+if rev_time - start < 1 or rev_res != rev_str[::-1] :
+    raise Exception(f"Reverse function didn't work properly. {rev_res}: {rev_time - start}")
 
+dup_res = duplicate(email=email, string_to_process=dup_str)(blocking=True)
+dup_time = time.time()
 
-scheduled.restore()
-if scheduled.is_revoked():
-    raise Exception('Schedule should be restored')
-
-
-# Can manually run whenever you want:
-eth_now = check_price('eth')
-print('eth now', eth_now)
-
-btc_now = check_price('btc')
-print('btc now', btc_now)
-
-if eth_now > threshold_min:
-    notif_1 = notify(webhook1, f'eth above threshold: {threshold_min} with value: {eth_now}')
-    notif_2 = notify(webhook2, f'eth above threshold: {threshold_min} with value: {eth_now}')
-
-    if notif_1(blocking=True, timeout=10) != f'webhook1: eth above threshold: {threshold_min} with value: {eth_now}':
-        raise Exception('Result timed out or notification message is wrong.')
-    if notif_2(blocking=True, timeout=10) != f'webhook2: eth above threshold: {threshold_min} with value: {eth_now}':
-        raise Exception('Result timed out or notification message is wrong.')
-
-
+if dup_time - start < 4 or dup_res != (dup_str + dup_str):
+    raise Exception(f"Duplication function didn't work properly. {dup_res}: {dup_time - start}")

@@ -99,47 +99,6 @@ jobs:
         run: pip install -r requirements.txt -U
       - name: Run Huey Worker
         run: |
-          huey_consumer.py coin.huey > /dev/null 2>&1 &
-        shell: bash
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-      - name: Run Python script
-        id: 'testing'
-        run: |
-          python3 test.py
-        shell: bash
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-
-      - name: Run script
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        if: always() && steps.testing.outcome != 'success'
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"HUEY-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
-        shell: bash
-
-
-  huey2:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./using-huey
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Python and dependencies
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-      - name: Install dependencies with latest versions
-        run: pip install -r requirements.txt -U
-      - name: Run Huey Worker
-        run: |
           huey_consumer.py tasks.huey > /dev/null 2>&1 &
         shell: bash
         env:
@@ -149,7 +108,7 @@ jobs:
       - name: Run Python script
         id: 'testing'
         run: |
-          python3 test2.py
+          python3 test.py
         shell: bash
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}

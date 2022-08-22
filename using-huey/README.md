@@ -1,28 +1,22 @@
-# Huey Periodic Job Runs
+# Huey Prallel Job Running
 
-## Simple periodic job running, using Huey python library.
-You can configure a lightweight task queue for your applications with Huey, Using Upstash Redis. 
+## Simple Parallel job running, using Flask and Huey.
+In this example, we are configuring a Flask server, where there is `/submit` endpoint. This endpoint takes `email` and `string_to_process` parameters.
 
-Here, we have a cron job running every 5 minutes to get coin prices with given thresholds so that the user can be notified if the current value is higher than the threshold defined. Retry mechanism is also applied, so that if we hit an external API error rate encounter rate limiting, we can try again for the same task.
+With this example, we are emulating a working processor server. Users send the input data for large computations that they cannot process themselves. (In this instance, using sleep for showcasing difficulty.)
 
-Since there are multiple different API's for fetching this kind of information. we will simply emulate via random numbers. We will do a similar thing for notification as well.
+When the POST request is made, server creates 2 Huey tasks (reverse the string and append itself to it). Tasks can be configured such that when the task is finished, a notification can be sent via different platforms. 
+(For the example instance, simply console logging.)
+
+With this configuration, we can process same input with different processing techniques, enabling concurrency. Since the background jobs, server responsiveness won't be effected much by these requests.
+
 
 ### Install Dependencies
 `pip install -r requirements.txt`
 
 ### Run Huey Worker
-`huey_consumer.py coin.huey`
+`huey_consumer.py tasks.huey`
 
 ### Generate the job
-```
->>> from coin import check_and_notify, check_price
+`curl -X POST http://localhost:5000/submit -H 'Content-Type: application/json' -d '{"email": "<email>", "string_to_process": "<string>"}'`
 
->>> check_and_notify('eth', 3.5)
->>> check_and_notify('btc', 40)
-
->>> eth_now = check_price('eth')
->>> eth_now()
-
->>> btc_now = check_price('btc')
->>> btc_now()
-```
