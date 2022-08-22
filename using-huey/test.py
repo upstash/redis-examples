@@ -23,7 +23,7 @@ if eth_now > threshold_min:
     notif_1 = notify(webhook1, f'eth above threshold: {threshold_min} with value: {eth_now}')
     notif_2 = notify(webhook2, f'eth above threshold: {threshold_min} with value: {eth_now}')
 
-    if notif_1(blocking=True, timeout=3) != f'awebhook1: eth above threshold: {threshold_min} with value: {eth_now}':
+    if notif_1(blocking=True, timeout=3) != f'webhook1: eth above threshold: {threshold_min} with value: {eth_now}':
         raise Exception('Result timed out or notification message is wrong.')
     if notif_2(blocking=True, timeout=3) != f'webhook2: eth above threshold: {threshold_min} with value: {eth_now}':
         raise Exception('Result timed out or notification message is wrong.')
