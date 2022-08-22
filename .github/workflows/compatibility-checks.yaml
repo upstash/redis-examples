@@ -110,6 +110,10 @@ jobs:
         run: |
           python3 test.py
         shell: bash
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
 
       - name: Run script
         env:
