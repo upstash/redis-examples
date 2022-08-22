@@ -9,8 +9,16 @@ threshold_btc = 40
 threshold_min = 0
 
 # Runs every minute and sends notification:
-check_and_notify('eth', threshold_eth)
-# check_and_notify('btc', threshold_btc)
+scheduled = check_and_notify('eth', threshold_eth)
+scheduled.revoke()
+if not scheduled.is_revoked():
+    raise Exception('Schedule should be revoked')
+
+
+scheduled.restore()
+if scheduled.is_revoked():
+    raise Exception('Schedule should be restored')
+
 
 # Can manually run whenever you want:
 eth_now = check_price('eth')
