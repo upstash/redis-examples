@@ -123,33 +123,33 @@ jobs:
           curl -X POST -H 'Content-type: application/json' --data '{"text":"HUEY2-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash
 
-  # apscheduler:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #     run:
-  #       working-directory: ./using-apscheduler
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: Set up Python and dependencies
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: '3.8'
-  #     - name: Install dependencies with latest versions
-  #       run: pip install -r requirements.txt -U
-  #     - name: Run compatibility test
-  #       id: "testing"
-  #       run: |
-  #         python3 example.py
-  #       env:
-  #         UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-  #         UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-  #         UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-  #     - name: Run script
-  #       env:
-  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-  #       if: always() && steps.testing.outcome != 'success'
-  #       run: |
-  #         curl -X POST -H 'Content-type: application/json' --data '{"text":"APSCHEDULER-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
-  #       shell: bash
+  apscheduler:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./using-apscheduler
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python and dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+      - name: Install dependencies with latest versions
+        run: pip install -r requirements.txt -U
+      - name: Run compatibility test
+        id: "testing"
+        run: |
+          python3 test.py --clear
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Run script
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() && steps.testing.outcome != 'success'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"APSCHEDULER-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
   
