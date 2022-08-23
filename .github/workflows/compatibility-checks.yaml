@@ -168,7 +168,6 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
-          bundle init
           bundle add resque
         shell: bash
       - name: run
