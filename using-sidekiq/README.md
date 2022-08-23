@@ -1,6 +1,6 @@
-# Sidekiq Mailer
+# [Sidekiq](https://github.com/mperham/sidekiq) Mailer
 
-## A simple scenario, showcasing Sidekiq background job processing capabilities by using Upstash Redis.
+## A simple scenario, showcasing background job processing capabilities by using Upstash Redis.
 
 Assume you provide a service: When users sign-up for your service, you want to have an automated behaviour, whether it is generating user specific objects or adding them to your list of customers. For this kind of workflow, we will take automated emailing, emulated by simply console logging.
 

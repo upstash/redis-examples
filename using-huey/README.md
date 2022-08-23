@@ -1,4 +1,4 @@
-# Huey Prallel Job Running
+# [Huey](https://github.com/coleifer/huey) Parallel Job Running
 
 ## Simple Parallel job running, using Flask and Huey.
 In this example, we are configuring a Flask server, where there is `/submit` endpoint. This endpoint takes `email` and `string_to_process` parameters.

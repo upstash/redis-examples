@@ -1,4 +1,4 @@
-# Apscheduler with Upstash Redis
+# [Apscheduler](https://github.com/agronholm/apscheduler) with Upstash Redis
 
 ## A task scheduler, showcasing Apscheduler by using Upstash Redis.
 For this example, we are running scheduled processing, where we fetch 'eth' and 'btc' coin prices (mocked up by random int generation - since many APIs exist).

@@ -1,4 +1,4 @@
-# Celery Job Processor
+# [Celery](https://github.com/celery/celery) Job Processor
 
 ## A simple job processing scenario, showcasing a Flask and Celery by using Upstash Redis.
 You have a server, where you process customer's jobs for them: apply some training for their models, apply image, text processing etc.
