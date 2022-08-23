@@ -170,11 +170,17 @@ jobs:
           gem install bundler
           bundle add resque
         shell: bash
-      - name: run
+      - name: Populate Queues
+        run: |
+          ruby populate.rb
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Start Workers
         continue-on-error: true
         id: 'testing'
         run: |
-          ruby populate.rb
           timeout 30s rake resque:work QUEUE=enterprise,free
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
@@ -191,5 +197,5 @@ jobs:
         # if: always() && steps.compare.outcome != 'success'
         if: always()
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"SIDEKIQ-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"RESQUE-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash
