@@ -24,3 +24,5 @@ class Free
         puts 'Free process finished for {' + difficulty + ":" + string_input + "}\n"
     end
 end
+
+
