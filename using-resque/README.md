@@ -20,4 +20,6 @@ Since enterprise processes have a higher priority than the free processes:
 
 
 ### Resque Web Interface
-Another cool thing with Resque is that they provide a web interface showcasing the state of the queues and workers. There, you can find many functionalities such as re-running failed jobs.
+Another cool thing with Resque is that they provide a web interface showcasing the state of the queues and workers. There, you can find many functionalities such as re-running failed jobs. To run the web ui:
+`resque-web -p <preferred-port> -r <UPSTASH_REDIS_CONNECTION_URL>`
+Then go to your `http://localhost:<preferred-port>`

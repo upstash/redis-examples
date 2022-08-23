@@ -7,7 +7,7 @@ class Enterprise
         else
             sleep 1
         end
-        puts 'Enterprise process finished for {' + difficulty + ":" + string_input + "}\n"
+        puts "Enterprise process finished for { #{difficulty}: #{string_input} } "
     end
 end
 
@@ -21,7 +21,7 @@ class Free
         else
             sleep 1
         end
-        puts 'Free process finished for {' + difficulty + ":" + string_input + "}\n"
+        puts "Free process finished for { #{difficulty}: #{string_input} } "
     end
 end
 
