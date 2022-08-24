@@ -18,10 +18,10 @@ def decrement_val():
 
 
 if __name__ == '__main__':
-    scheduler.pause()
     scheduler.remove_all_jobs()
 
     len_initial = len(scheduler.get_jobs())
+    print("len_initial:", len_initial)
 
     id_inc = 'test_inc'
     id_dec = 'test_dec'
@@ -29,9 +29,11 @@ if __name__ == '__main__':
     scheduler.add_job(increment_val, 'interval', seconds=1, id=id_inc, misfire_grace_time=2)
     scheduler.add_job(decrement_val, 'interval', seconds=2, id=id_dec, misfire_grace_time=2)
 
-    scheduler.resume()
 
     len_after = len(scheduler.get_jobs())
+
+    print("len_after:", len_after)
+
 
     if len_after != (len_initial + 2):
         raise Exception("Jobs haven't been scheduled.")
@@ -42,3 +44,4 @@ if __name__ == '__main__':
     if steps < 7:
         print(steps)
         raise Exception("Decrement function didn't work.")
+

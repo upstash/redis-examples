@@ -56,7 +56,6 @@ if __name__ == '__main__':
         scheduler.add_job(check_and_notify, 'interval', ['btc', 40], seconds=60, id=btc_job_id)
 
     if scheduler.get_job(eth_job_id) is None:
-        print("aaaaaaaaaaaaa")
         scheduler.add_job(check_and_notify, 'interval', ['eth', 3.5], seconds=30, id=eth_job_id)
 
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
