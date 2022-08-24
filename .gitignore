@@ -49,3 +49,9 @@ __pycache__
 
 # not finalized 
 using-rq
+
+
+# client
+using-ioredis
+using_go-redis
+
