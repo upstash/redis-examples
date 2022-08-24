@@ -1,4 +1,5 @@
 from main import scheduler
+import time
 
 counter = 0
 steps = 0
