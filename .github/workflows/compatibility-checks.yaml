@@ -141,7 +141,7 @@ jobs:
       - name: Run compatibility test
         id: "testing"
         run: |
-          python3 test.py --clear
+          python3 test.py
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
           UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
