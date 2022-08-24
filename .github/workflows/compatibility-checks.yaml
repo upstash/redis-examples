@@ -168,6 +168,7 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
+          bundle add redis --version 4.7.1
           bundle add resque
         shell: bash
       - name: Populate Queues
