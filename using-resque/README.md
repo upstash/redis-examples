@@ -13,6 +13,8 @@ Since we provide our services for free, paid users will have the priority to get
 ### Run Worker
 Since enterprise processes have a higher priority than the free processes:
 `QUEUE=enterprise,free rake resque:work`
+or
+`COUNT=<#workers> QUEUE=enterprise,free rake resque:workers` for multiple workers
 
 
 ### Populate Worker with processes

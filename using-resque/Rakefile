@@ -4,3 +4,8 @@ require './processes'
 require './constants'
 
 Resque.redis = connection_url()
+
+
+
+Resque.logger.level = Logger::FATAL
+# Resque.redis.namespace = "resque:upstash"
