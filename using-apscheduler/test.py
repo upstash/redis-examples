@@ -23,8 +23,8 @@ if __name__ == '__main__':
     id_inc = 'test_inc'
     id_dec = 'test_dec'
 
-    scheduler.add_job(increment_val, 'interval', seconds=1, id=id_inc, misfire_grace_time=5)
-    scheduler.add_job(decrement_val, 'interval', seconds=2, id=id_dec, misfire_grace_time=5)
+    scheduler.add_job(increment_val, 'interval', seconds=1, id=id_inc)
+    scheduler.add_job(decrement_val, 'interval', seconds=2, id=id_dec)
 
     len_after = len(scheduler.get_jobs())
 
