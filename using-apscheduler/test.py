@@ -1,4 +1,5 @@
 from main import scheduler
+import time
 
 counter = 0
 steps = 0
@@ -17,14 +18,18 @@ def decrement_val():
 
 
 if __name__ == '__main__':
+    scheduler.pause()
     scheduler.remove_all_jobs()
+
     len_initial = len(scheduler.get_jobs())
 
     id_inc = 'test_inc'
     id_dec = 'test_dec'
 
-    scheduler.add_job(increment_val, 'interval', seconds=1, id=id_inc)
-    scheduler.add_job(decrement_val, 'interval', seconds=2, id=id_dec)
+    scheduler.add_job(increment_val, 'interval', seconds=1, id=id_inc, misfire_grace_time=2)
+    scheduler.add_job(decrement_val, 'interval', seconds=2, id=id_dec, misfire_grace_time=2)
+
+    scheduler.resume()
 
     len_after = len(scheduler.get_jobs())
 
