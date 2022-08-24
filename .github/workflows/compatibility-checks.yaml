@@ -26,6 +26,7 @@ jobs:
         run: |
           gem install bundler
           bundle init
+          bundle add redis --version 4.7.1
           bundle add sidekiq
         shell: bash
       - name: run
