@@ -41,6 +41,9 @@ if __name__ == '__main__':
     while counter < 5:
         pass
 
+    scheduler.remove_all_jobs()
+    scheduler.shutdown()
+    
     if steps < 7:
         print(steps)
         raise Exception("Decrement function didn't work.")
