@@ -1,4 +1,5 @@
 from main import scheduler
+import time
 
 counter = 0
 steps = 0
@@ -18,6 +19,7 @@ def decrement_val():
 
 if __name__ == '__main__':
     scheduler.remove_all_jobs()
+    time.sleep(5)
 
     len_initial = len(scheduler.get_jobs())
     print("len_initial:", len_initial)
