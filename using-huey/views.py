@@ -1,5 +1,4 @@
 from app import app
-from socket import timeout
 from flask import request
 from tasks import reverse, duplicate
 

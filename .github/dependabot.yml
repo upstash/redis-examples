@@ -1,5 +1,6 @@
 version: 2
 updates:
+
   # Python packages
   - package-ecosystem: "pip"
     directory: "/using-huey"
@@ -33,3 +34,10 @@ updates:
       interval: "daily"
     target-branch: "compatible-libraries"
       
+
+  # Ruby packages
+  - package-ecosystem: "cargo"
+    directory: "/using_redis-rs"
+    schedule:
+      interval: "daily"
+    target-branch: "compatible-libraries"

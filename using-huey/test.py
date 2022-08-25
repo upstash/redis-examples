@@ -19,3 +19,15 @@ dup_time = time.time()
 
 if dup_time - start < 4 or dup_res != (dup_str + dup_str):
     raise Exception(f"Duplication function didn't work properly. {dup_res}: {dup_time - start}")
+
+
+start = time.time()
+rev_str2 = 'str_to_reverse2'
+
+res = reverse.schedule((email, rev_str2), delay=5)(blocking=True)
+
+end = time.time()
+
+if end-start < 6 or res != rev_str2[::-1]:
+    raise Exception(f"Huey delay didn't work properly. {res}: {start-end}")
+
