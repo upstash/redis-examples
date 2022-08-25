@@ -11,7 +11,7 @@ fn fetch_an_integer(connection_link:&str) -> redis::RedisResult<isize> {
     let mut con = client.get_connection()?;
     let _ : () = con.set("meaning-of-life", 42)? ;
 
-    assert_eq!(con.get("meaning-of-life"), Ok(43));
+    assert_eq!(con.get("meaning-of-life"), Ok(42));
     con.get("meaning-of-life")
 }
 
