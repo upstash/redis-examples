@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
 
-# gem "rails"
+gem "resque", "= 2.2.1"
 
-gem "resque"
+gem "redis", "= 4.7.1"

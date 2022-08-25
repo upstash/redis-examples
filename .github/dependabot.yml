@@ -1,11 +1,25 @@
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
-# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-
 version: 2
 updates:
-  - package-ecosystem: "pip" # See documentation for possible values
-    directory: "/using-celery" # Location of package manifests
+  # Python packages
+  - package-ecosystem: "pip"
+    directory: "/using-huey"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "/using-apscheduler"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "pip"
+    directory: "/using-celery"
+    schedule:
+      interval: "daily"
+
+  # Ruby packages
+  - package-ecosystem: "bundler"
+    directory: "/using-sidekiq"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "bundler"
+    directory: "/using-resque"
     schedule:
       interval: "daily"

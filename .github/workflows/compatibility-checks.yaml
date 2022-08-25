@@ -25,9 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
-          bundle init
-          bundle add redis --version 4.7.1
-          bundle add sidekiq
+          bundle install
         shell: bash
       - name: run
         continue-on-error: true
@@ -169,8 +167,7 @@ jobs:
       - name: Install dependencies
         run: |
           gem install bundler
-          bundle add redis --version 4.7.1
-          bundle add resque
+          bundle install
         shell: bash
       - name: Populate Queues
         run: |
