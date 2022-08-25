@@ -5,21 +5,31 @@ updates:
     directory: "/using-huey"
     schedule:
       interval: "daily"
+    target-branch: "compatible-libraries"
+
   - package-ecosystem: "pip"
     directory: "/using-apscheduler"
     schedule:
       interval: "daily"
+    target-branch: "compatible-libraries"
+    
   - package-ecosystem: "pip"
     directory: "/using-celery"
     schedule:
       interval: "daily"
+    target-branch: "compatible-libraries"
+    
 
   # Ruby packages
   - package-ecosystem: "bundler"
     directory: "/using-sidekiq"
     schedule:
       interval: "daily"
+    target-branch: "compatible-libraries"
+
   - package-ecosystem: "bundler"
     directory: "/using-resque"
     schedule:
       interval: "daily"
+    target-branch: "compatible-libraries"
+      
