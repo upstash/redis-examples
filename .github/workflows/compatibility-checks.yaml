@@ -30,7 +30,7 @@ jobs:
       - name: run
         continue-on-error: true
         run: |
-          timeout 30s bundle exec sidekiq -r ./sendEmail.rb 2>&1 | tee sampleLogs2.log | bash client.sh
+          timeout 40s bundle exec sidekiq -r ./sendEmail.rb 2>&1 | tee sampleLogs2.log | bash client.sh
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
           UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
@@ -49,78 +49,78 @@ jobs:
         shell: bash
 
 
-  celery:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./using-celery
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Python and dependencies
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-      - name: Install dependencies with latest versions
-        run: pip install -r requirements.txt -U
-      - name: Run servers and test
-        id: 'testing'
-        run: |
-          flask --app server run > /dev/null 2>&1 &
-          celery -A tasks worker --loglevel=INFO > /dev/null 2>&1 &
-          python3 test.py
-        shell: bash
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-      - name: Run script
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        if: always() && steps.testing.outcome != 'success'
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"CELERY-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
-        shell: bash
+  # celery:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./using-celery
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Set up Python and dependencies
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: '3.8'
+  #     - name: Install dependencies with latest versions
+  #       run: pip install -r requirements.txt -U
+  #     - name: Run servers and test
+  #       id: 'testing'
+  #       run: |
+  #         flask --app server run > /dev/null 2>&1 &
+  #         celery -A tasks worker --loglevel=INFO > /dev/null 2>&1 &
+  #         python3 test.py
+  #       shell: bash
+  #       env:
+  #         UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+  #         UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+  #         UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+  #     - name: Run script
+  #       env:
+  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #       if: always() && steps.testing.outcome != 'success'
+  #       run: |
+  #         curl -X POST -H 'Content-type: application/json' --data '{"text":"CELERY-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+  #       shell: bash
 
-  huey:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./using-huey
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Python and dependencies
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
-      - name: Install dependencies with latest versions
-        run: pip install -r requirements.txt -U
-      - name: Run Huey Worker
-        run: |
-          huey_consumer.py tasks.huey > /dev/null 2>&1 &
-        shell: bash
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-      - name: Run Python script
-        id: 'testing'
-        run: |
-          python3 test.py
-        shell: bash
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+  # huey:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./using-huey
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Set up Python and dependencies
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: '3.8'
+  #     - name: Install dependencies with latest versions
+  #       run: pip install -r requirements.txt -U
+  #     - name: Run Huey Worker
+  #       run: |
+  #         huey_consumer.py tasks.huey > /dev/null 2>&1 &
+  #       shell: bash
+  #       env:
+  #         UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+  #         UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+  #         UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+  #     - name: Run Python script
+  #       id: 'testing'
+  #       run: |
+  #         python3 test.py
+  #       shell: bash
+  #       env:
+  #         UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+  #         UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+  #         UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
 
-      - name: Run script
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        if: always() && steps.testing.outcome != 'success'
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"HUEY2-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
-        shell: bash
+  #     - name: Run script
+  #       env:
+  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #       if: always() && steps.testing.outcome != 'success'
+  #       run: |
+  #         curl -X POST -H 'Content-type: application/json' --data '{"text":"HUEY2-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+  #       shell: bash
 
   apscheduler:
     runs-on: ubuntu-latest
@@ -152,49 +152,49 @@ jobs:
           curl -X POST -H 'Content-type: application/json' --data '{"text":"APSCHEDULER-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash
   
-  resque:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./using-resque
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Ruby and dependencies
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
-        shell: bash
-      - name: Populate Queues
-        run: |
-          ruby populate.rb
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-      - name: Start Workers
-        continue-on-error: true
-        id: 'testing'
-        run: |
-          timeout 30s rake resque:work QUEUE=enterprise,free INTERVAL=0.5
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-      # - name: Compare outputs
-      #   if: always()
-      #   id: 'compare'
-      #   run: |
-      #     diff <(sort sampleLogs.log) <(sort sampleLogs2.log)
-      - name: Run script for Resque
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        # if: always() && steps.compare.outcome != 'success'
-        if: always()
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"RESQUE-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
-        shell: bash
+  # resque:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./using-resque
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Set up Ruby and dependencies
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: '3.1'
+  #     - name: Install dependencies
+  #       run: |
+  #         gem install bundler
+  #         bundle install
+  #       shell: bash
+  #     - name: Populate Queues
+  #       run: |
+  #         ruby populate.rb
+  #       env:
+  #         UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+  #         UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+  #         UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+  #     - name: Start Workers
+  #       continue-on-error: true
+  #       id: 'testing'
+  #       run: |
+  #         timeout 30s rake resque:work QUEUE=enterprise,free INTERVAL=0.5
+  #       env:
+  #         UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+  #         UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+  #         UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+  #     # - name: Compare outputs
+  #     #   if: always()
+  #     #   id: 'compare'
+  #     #   run: |
+  #     #     diff <(sort sampleLogs.log) <(sort sampleLogs2.log)
+  #     - name: Run script for Resque
+  #       env:
+  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #       # if: always() && steps.compare.outcome != 'success'
+  #       if: always()
+  #       run: |
+  #         curl -X POST -H 'Content-type: application/json' --data '{"text":"RESQUE-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+  #       shell: bash
