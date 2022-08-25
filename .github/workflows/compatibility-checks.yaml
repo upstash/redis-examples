@@ -10,43 +10,43 @@ on:
 
 jobs:
 
-  sidekiq:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./using-sidekiq
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Ruby and dependencies
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
-      - name: Install dependencies
-        run: |
-          gem install bundler
-          bundle install
-        shell: bash
-      - name: run
-        continue-on-error: true
-        run: |
-          timeout 40s bundle exec sidekiq -r ./sendEmail.rb 2>&1 | tee sampleLogs2.log | bash client.sh
-        env:
-          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
-          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
-          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-      - name: Compare outputs
-        if: always()
-        id: 'compare'
-        run: |
-          diff <(sort sampleLogs.log) <(sort sampleLogs2.log)
-      - name: Run script for Sidekiq
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        if: always() && steps.compare.outcome != 'success'
-        run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"SIDEKIQ-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
-        shell: bash
+  # sidekiq:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./using-sidekiq
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v2
+  #     - name: Set up Ruby and dependencies
+  #       uses: ruby/setup-ruby@v1
+  #       with:
+  #         ruby-version: '3.1'
+  #     - name: Install dependencies
+  #       run: |
+  #         gem install bundler
+  #         bundle install
+  #       shell: bash
+  #     - name: run
+  #       continue-on-error: true
+  #       run: |
+  #         timeout 40s bundle exec sidekiq -r ./sendEmail.rb 2>&1 | tee sampleLogs2.log | bash client.sh
+  #       env:
+  #         UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+  #         UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+  #         UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+  #     - name: Compare outputs
+  #       if: always()
+  #       id: 'compare'
+  #       run: |
+  #         diff <(sort sampleLogs.log) <(sort sampleLogs2.log)
+  #     - name: Run script for Sidekiq
+  #       env:
+  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #       if: always() && steps.compare.outcome != 'success'
+  #       run: |
+  #         curl -X POST -H 'Content-type: application/json' --data '{"text":"SIDEKIQ-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+  #       shell: bash
 
 
   # celery:

@@ -20,7 +20,6 @@ executors = {
 }
 
 scheduler = BackgroundScheduler(jobstores=jobstores, executors=executors)
-scheduler.start()
 
 def check_and_notify(coin, threshold):
     current_value = check_price(coin)
@@ -48,6 +47,8 @@ btc_job_id = 'btc-notifier'
 eth_job_id = 'eth-notifier'
 
 if __name__ == '__main__':
+    scheduler.start()
+
     # Running the example with the --clear switch will remove scheduled jobs.
     if len(sys.argv) > 1 and sys.argv[1] == '--clear':
         scheduler.remove_all_jobs()
