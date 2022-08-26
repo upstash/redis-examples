@@ -35,7 +35,7 @@ updates:
     target-branch: "compatible-libraries"
       
 
-  # Ruby packages
+  # Rust packages
   - package-ecosystem: "cargo"
     directory: "/using_redis-rs"
     schedule:
