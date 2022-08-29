@@ -181,7 +181,7 @@ jobs:
       - name: Start Workers
         id: 'compare'
         run: |
-          sed -i '/^\(Enterprise process|Free process:\)/!d' sampleLogs2.log
+          sed -i '/^\(Enterprise process\|Free process\)/!d' sampleLogs2.log
           diff sampleLogs.log sampleLogs2.log
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
