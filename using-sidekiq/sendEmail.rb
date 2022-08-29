@@ -51,9 +51,9 @@ end
 def sendEmail(id, type)
     case type
     when "free"
-        EmailService.perform_in("5", id, "free")
+        EmailService.perform_in("15", id, "free")
     when "paid"
-        EmailService.perform_in("3", id, "paid")
+        EmailService.perform_in("5", id, "paid")
     when "enterprise"
         EmailService.perform_async(id, "enterprise")
     when "enterprise10k"

@@ -120,7 +120,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         if: always() && steps.testing.outcome != 'success'
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"HUEY2-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"HUEY-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash
 
   apscheduler:
@@ -194,8 +194,8 @@ jobs:
       - name: Run script for Resque
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        # if: always() && steps.compare.outcome != 'success'
-        if: always()
+        if: always() && steps.testing.outcome != 'success'
+        # if: always()
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text":"RESQUE-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash

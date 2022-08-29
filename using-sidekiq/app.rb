@@ -5,7 +5,6 @@ require 'bundler/setup'
 require 'sinatra'
 require './sendEmail.rb'
 
-
 greeting="<h1>Sidekiq with Upstash Redis!</h1>"
 
 get '/' do
