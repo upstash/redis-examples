@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo 'clearSchedules()' | bundle exec irb -r ./sendEmail.rb
+
 # This one should send 4 messages, since enterprise immediately adds job to queue.
 echo 'sendEmail("id1", "free")' | bundle exec irb -r ./sendEmail.rb
 echo 'sendEmail("id2", "paid")' | bundle exec irb -r ./sendEmail.rb
