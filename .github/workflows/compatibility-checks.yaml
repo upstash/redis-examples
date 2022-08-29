@@ -171,31 +171,26 @@ jobs:
           bundle install
         shell: bash
       - name: Populate Queues
+        continue-on-error: true
         run: |
-          ruby populate.rb
+          timeout 20s rake resque:work QUEUE=enterprise,free INTERVAL=0.5 2>&1 | tee sampleLogs2.log | ruby populate.rb
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
           UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
           UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
       - name: Start Workers
-        continue-on-error: true
-        id: 'testing'
+        id: 'compare'
         run: |
-          timeout 30s rake resque:work QUEUE=enterprise,free INTERVAL=0.5
+          sed -i '/^\(Enterprise process|Free process:\)/!d' sampleLogs2.log
+          diff sampleLogs.log sampleLogs2.log
         env:
           UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
           UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
           UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
-      # - name: Compare outputs
-      #   if: always()
-      #   id: 'compare'
-      #   run: |
-      #     diff <(sort sampleLogs.log) <(sort sampleLogs2.log)
       - name: Run script for Resque
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        if: always() && steps.testing.outcome != 'success'
-        # if: always()
+        if: always() && steps.compare.outcome != 'success'
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text":"RESQUE-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
         shell: bash

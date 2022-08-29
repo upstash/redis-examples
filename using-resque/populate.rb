@@ -11,6 +11,3 @@ Resque.enqueue(Free, 'easy', 'process_2')
 Resque.enqueue(Enterprise, 'easy', 'process_3')
 
 sleep 10
-Resque.enqueue(Free, 'hard', 'process_4')
-Resque.enqueue(Enterprise, 'easy', 'process_5')
-Resque.enqueue(Free, 'easy', 'process_6')
