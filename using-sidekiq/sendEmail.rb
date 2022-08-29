@@ -1,12 +1,15 @@
 require "sidekiq"
 require "sidekiq/api"
 
-Sidekiq.logger.level = Logger::FATAL
+# Sidekiq.logger.level = Logger::FATAL
+
 
 host = ENV['UPSTASH_REDIS_HOST']
 password = ENV['UPSTASH_REDIS_PASSWORD']
 port = ENV['UPSTASH_REDIS_PORT']
-connection_url = "redis://:#{password}@#{host}:#{port}"
+
+connection_url = ENV['UPSTASH_REDIS_LINK']
+connection_url = connection_url || "redis://:#{password}@#{host}:#{port}"
 
 Sidekiq.configure_client do |config|
     config.redis = {url: connection_url}
@@ -27,7 +30,7 @@ end
 
 
 def updateEmail(id, newType)
-    include Sidekiq::Job
+    # include Sidekiq::Job
     jobFound = false
     
     a = Sidekiq::ScheduledSet.new
@@ -58,4 +61,10 @@ def sendEmail(id, type)
     else
         puts "Only plans are: `free`, `paid` and `enterprise`"
     end
+end
+
+def clearSchedules()
+    Sidekiq::ScheduledSet.new.clear
+    Sidekiq::Queue.new.clear
+
 end

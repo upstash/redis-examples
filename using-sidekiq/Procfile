@@ -1,0 +1,1 @@
+web: bundle exec rackup & bundle exec sidekiq -r ./sendEmail.rb

@@ -1,2 +1,2 @@
 APScheduler==3.8.1
-redis==4.3.3
+redis

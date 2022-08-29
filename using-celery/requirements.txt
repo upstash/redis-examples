@@ -1,4 +1,4 @@
 celery==5.2.6
-redis==4.3.3
+redis
 flask
 requests
