@@ -66,5 +66,4 @@ end
 def clearSchedules()
     Sidekiq::ScheduledSet.new.clear
     Sidekiq::Queue.new.clear
-
 end
