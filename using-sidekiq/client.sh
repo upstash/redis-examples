@@ -20,5 +20,5 @@ echo 'updateEmail("id5", "enterprise10k")' | bundle exec irb -r ./sendEmail.rb
 echo 'sendEmail("id7", "free")' | bundle exec irb -r ./sendEmail.rb
 echo 'sendEmail("id8", "paid")' | bundle exec irb -r ./sendEmail.rb
 echo 'sendEmail("id9", "enterprise")' | bundle exec irb -r ./sendEmail.rb
-sleep 25
+sleep 30
 echo 'updateEmail("id7", "enterprise10k")' | bundle exec irb -r ./sendEmail.rb 
