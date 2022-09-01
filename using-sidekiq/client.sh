@@ -15,11 +15,4 @@ echo 'sendEmail("id5", "paid")' | bundle exec irb -r ./sendEmail.rb
 echo 'sendEmail("id6", "enterprise")' | bundle exec irb -r ./sendEmail.rb
 echo 'updateEmail("id5", "enterprise10k")' | bundle exec irb -r ./sendEmail.rb
 
-
-# This one should send 4 messages, all the jobs are executed and then an update took place.
-echo 'sendEmail("id7", "free")' | bundle exec irb -r ./sendEmail.rb
-echo 'sendEmail("id8", "paid")' | bundle exec irb -r ./sendEmail.rb
-echo 'sendEmail("id9", "enterprise")' | bundle exec irb -r ./sendEmail.rb
-sleep 20
-echo 'updateEmail("id8", "enterprise10k")' | bundle exec irb -r ./sendEmail.rb 
-sleep 20
+sleep 10
