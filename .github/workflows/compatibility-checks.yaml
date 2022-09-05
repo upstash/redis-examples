@@ -1,0 +1,223 @@
+name: Compatibility Tests
+on:
+  push:
+    branches:
+      - 'compatible-libraries'
+
+  schedule:
+    - cron: "0 12 * * *"
+    # run everyday at 12.00
+
+jobs:
+
+  sidekiq:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./using-sidekiq
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Ruby and dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+        shell: bash
+      - name: run
+        continue-on-error: true
+        run: |
+          timeout 50s bundle exec sidekiq -r ./sendEmail.rb 2>&1 | tee sampleLogs2.log | bash client.sh
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Compare outputs
+        if: always()
+        id: 'compare'
+        run: |
+          sed -i '/^\(Emailed to:\)/!d' sampleLogs2.log
+          diff <(sort sampleLogs.log) <(sort sampleLogs2.log)
+      - name: Run script for Sidekiq
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() && steps.compare.outcome != 'success'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"SIDEKIQ-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
+
+
+  celery:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./using-celery
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python and dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+      - name: Install dependencies with latest versions
+        run: pip install -r requirements.txt -U
+      - name: Run servers and test
+        id: 'testing'
+        run: |
+          flask --app server run > /dev/null 2>&1 &
+          celery -A tasks worker --loglevel=INFO > /dev/null 2>&1 &
+          python3 test.py
+        shell: bash
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Run script
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() && steps.testing.outcome != 'success'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"CELERY-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
+
+  huey:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./using-huey
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python and dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+      - name: Install dependencies with latest versions
+        run: pip install -r requirements.txt -U
+      - name: Run Huey Worker
+        run: |
+          huey_consumer.py tasks.huey > /dev/null 2>&1 &
+        shell: bash
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Run Python script
+        id: 'testing'
+        run: |
+          python3 test.py
+        shell: bash
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+
+      - name: Run script
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() && steps.testing.outcome != 'success'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"HUEY-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
+
+  apscheduler:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./using-apscheduler
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Python and dependencies
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+      - name: Install dependencies with latest versions
+        run: pip install -r requirements.txt -U
+      - name: Run compatibility test
+        id: "testing"
+        run: |
+          python3 test.py
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Run script
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() && steps.testing.outcome != 'success'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"APSCHEDULER-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
+  
+  resque:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./using-resque
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up Ruby and dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+        shell: bash
+      - name: Populate Queues
+        continue-on-error: true
+        run: |
+          timeout 20s rake resque:work QUEUE=enterprise,free INTERVAL=0.5 2>&1 | tee sampleLogs2.log | ruby populate.rb
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Start Workers
+        id: 'compare'
+        run: |
+          sed -i '/^\(Enterprise process\|Free process\)/!d' sampleLogs2.log
+          diff sampleLogs.log sampleLogs2.log
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Run script for Resque
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() && steps.compare.outcome != 'success'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"RESQUE-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
+
+
+  redis-rs:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./using_redis-rs
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cargo run
+        id: 'testing'
+        run: |
+          cargo run
+        env:
+          UPSTASH_REDIS_HOST: ${{ secrets.UPSTASH_REDIS_HOST }}
+          UPSTASH_REDIS_PASSWORD: ${{ secrets.UPSTASH_REDIS_PASSWORD }}
+          UPSTASH_REDIS_PORT: ${{ secrets.UPSTASH_REDIS_PORT }}
+      - name: Run script
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        if: always() && steps.testing.outcome != 'success'
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"RUST-REDIS-COMPATIBILITY: Some tests have failed. Check the action: '$GITHUB_SERVER_URL'/'$GITHUB_REPOSITORY'/actions/runs/'$GITHUB_RUN_ID'"}' "$SLACK_WEBHOOK"
+        shell: bash
+
+  

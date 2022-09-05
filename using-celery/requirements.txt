@@ -1,0 +1,4 @@
+celery==5.2.6
+redis
+flask
+requests

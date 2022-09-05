@@ -41,3 +41,17 @@ yarn-error.log*
 
 # cdk
 cdk.out
+
+# python
+*/venv
+__pycache__
+
+
+# not finalized 
+using-rq
+
+
+# client
+using-ioredis
+using_go-redis
+
