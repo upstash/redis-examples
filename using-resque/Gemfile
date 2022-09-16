@@ -1,5 +1,5 @@
 source "https://rubygems.org"
 
-gem "resque", "= 2.2.1"
+gem "resque", "2.4.0"
 
 gem "redis", "5.0.4"
