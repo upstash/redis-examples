@@ -1,2 +1,2 @@
-APScheduler==3.9.1.post1
+APScheduler==3.10.0
 redis
