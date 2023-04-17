@@ -3,17 +3,18 @@ import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
 const COOKIE_NAME_ID = "__waiting_room_id";
 const COOKIE_NAME_TIME = "__waiting_room_last_update_time";
-const UPSTASH_REDIS_REST_TOKEN = "REPLACE_HERE";
-const UPSTASH_REDIS_REST_URL = "REPLACE_HERE";
 const TOTAL_ACTIVE_USERS = 10;
 const SESSION_DURATION_SECONDS = 30;
 
-const redis = new Redis({
-  url: UPSTASH_REDIS_REST_URL,
-  token: UPSTASH_REDIS_REST_TOKEN,
-});
+const redis = Redis.fromEnv();
 
-export async function middleware(req: NextRequest, ev: NextFetchEvent) {
+export const config = {
+  matcher: [
+    "/",
+  ],
+};
+
+export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
   const cookies = req.cookies;
   let userId;
   if (cookies[COOKIE_NAME_ID] != null) {
@@ -68,9 +69,9 @@ async function getDefaultResponse(request: NextRequest, userId: string) {
   const updateInterval = (SESSION_DURATION_SECONDS * 1000) / 2;
   if (diff > updateInterval) {
     await redis.setex(userId, SESSION_DURATION_SECONDS, "1");
-    newResponse.cookie(COOKIE_NAME_TIME, now.toString());
+    newResponse.cookies[COOKIE_NAME_TIME] = now.toString();
   }
-  newResponse.cookie(COOKIE_NAME_ID, userId);
+  newResponse.cookies[COOKIE_NAME_ID] = userId;
   return newResponse;
 }
 
