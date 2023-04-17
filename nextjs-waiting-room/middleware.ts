@@ -15,7 +15,7 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
-  const userId = req.cookies.get(COOKIE_NAME_ID) ?? makeid(8);
+  const userId = req.cookies.get(COOKIE_NAME_ID)?.value ?? makeid(8);
 
   const size = await redis.dbsize();
 
@@ -49,7 +49,7 @@ function makeid(length: number) {
 
 async function getDefaultResponse(request: NextRequest, userId: string) {
   // uncomment below to test the function with a static html content
-  let newResponse = new NextResponse(default_html);
+  const newResponse = new NextResponse(default_html);
   newResponse.headers.set("content-type", "text/html;charset=UTF-8");
 
   // const response = await fetch(request)
@@ -57,16 +57,16 @@ async function getDefaultResponse(request: NextRequest, userId: string) {
 
   const cookies = request.cookies;
   const now = Date.now();
-  let lastUpdate = cookies.get(COOKIE_NAME_TIME);
+  const lastUpdate = cookies.get(COOKIE_NAME_TIME)?.value
   let lastUpdateTime = 0;
   if (lastUpdate) lastUpdateTime = parseInt(lastUpdate);
   const diff = now - lastUpdateTime;
   const updateInterval = (SESSION_DURATION_SECONDS * 1000) / 2;
   if (diff > updateInterval) {
     await redis.setex(userId, SESSION_DURATION_SECONDS, "1");
-    newResponse.cookies[COOKIE_NAME_TIME] = now.toString();
+    newResponse.cookies.set(COOKIE_NAME_TIME, now.toString())
   }
-  newResponse.cookies[COOKIE_NAME_ID] = userId;
+  newResponse.cookies.set(COOKIE_NAME_ID, userId);
   return newResponse;
 }
 
