@@ -15,15 +15,10 @@ export const config = {
 };
 
 export default async function middleware(req: NextRequest, ev: NextFetchEvent) {
-  const cookies = req.cookies;
-  let userId;
-  if (cookies[COOKIE_NAME_ID] != null) {
-    userId = cookies[COOKIE_NAME_ID];
-  } else {
-    userId = makeid(8);
-  }
+  const userId = req.cookies.get(COOKIE_NAME_ID) ?? makeid(8);
 
   const size = await redis.dbsize();
+
   console.log("current capacity:" + size);
   // there is enough capacity
   if (size < TOTAL_ACTIVE_USERS) {
@@ -62,7 +57,7 @@ async function getDefaultResponse(request: NextRequest, userId: string) {
 
   const cookies = request.cookies;
   const now = Date.now();
-  let lastUpdate = cookies[COOKIE_NAME_TIME];
+  let lastUpdate = cookies.get(COOKIE_NAME_TIME);
   let lastUpdateTime = 0;
   if (lastUpdate) lastUpdateTime = parseInt(lastUpdate);
   const diff = now - lastUpdateTime;
