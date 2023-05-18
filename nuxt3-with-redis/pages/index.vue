@@ -26,13 +26,13 @@ const increment = async () => {
                 <p>
                     Get started by editing
                 <div class="p-1 rounded-xl bg-gradient-to-tr from-green-500 to-black bg-opacity-30">
-                    <p class="bg-black rounded-lg p-1">pages/index.js
+                    <p class="bg-black rounded-lg p-1">pages/index.vue
                     </p>
                 </div>
 
                 and
                 <div class="p-1 rounded-xl bg-gradient-to-tr from-green-500 to-black bg-opacity-30">
-                    <p class="bg-black rounded-lg p-1">api/count.js
+                    <p class="bg-black rounded-lg p-1">server/api/count.js
                     </p>
                 </div>
                 </p>
