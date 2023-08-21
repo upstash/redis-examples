@@ -1,2 +1,2 @@
-APScheduler==3.10.1
+APScheduler==3.10.3
 redis
