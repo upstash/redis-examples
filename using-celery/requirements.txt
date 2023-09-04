@@ -1,4 +1,4 @@
-celery==5.3.1
+celery==5.3.4
 redis
 flask
 requests
