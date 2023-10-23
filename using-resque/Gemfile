@@ -2,4 +2,4 @@ source "https://rubygems.org"
 
 gem "resque", "2.6.0"
 
-gem "redis", "5.0.7"
+gem "redis", "5.0.8"
