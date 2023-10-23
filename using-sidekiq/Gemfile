@@ -4,6 +4,6 @@ source "https://rubygems.org"
 
 
 gem "sidekiq", "7.1.2"
-gem "redis", "5.0.7"
+gem "redis", "5.0.8"
 
 gem "sinatra", "~> 3.0"
